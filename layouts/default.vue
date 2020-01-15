@@ -7,7 +7,28 @@
       <nav>
         <ul>
           <li><a href="#">sign in</a></li>
+          <li>
+            <nuxt-link to="/">
+              index
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/about">
+              about
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/mypage">
+              mypage > index
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/mypage/setting">
+              mypage > setting
+            </nuxt-link>
+          </li>
         </ul>
+        <button-wide>aaa</button-wide>
       </nav>
     </header>
     <aside>

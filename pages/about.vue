@@ -1,8 +1,6 @@
 <template>
   <div id="Wrapper">
-    <nuxt-link to="/">
-      Home page
-    </nuxt-link>
+    about
   </div>
 </template>
 

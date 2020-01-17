@@ -1,13 +1,13 @@
 import { storiesOf } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
 
-import ButtonWide from '../components/common/ButtonWide.vue'
+import MyButton from '../components/common/MyButton.vue'
 
-storiesOf('ButtonWide', module)
+storiesOf('MyButton', module)
   .add(
-    'default', () => ({
-      components: { ButtonWide },
-      template: `<button-wide @click.native="action"></button-wide>`,
+    'simple', () => ({
+      components: { MyButton },
+      template: '<MyButton @click.native="action"/>',
       methods: { action: action('button-clicked') }
     }),
     {

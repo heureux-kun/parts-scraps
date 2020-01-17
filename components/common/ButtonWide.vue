@@ -1,19 +1,27 @@
 <template>
   <div>
-    <button class="btn-blue">
-      Button
+    <button>
+      {{ text }}
     </button>
   </div>
 </template>
-<style>
-.btn-blue {
+<script>
+export default {
+  props: {
+    text: {
+      type: String,
+      default: 'Hello Vue'
+    }
+  }
+}
+</script>
+<style scoped>
+button {
   font-size: 18px;
-  background-color: #668ad8;
+  background-color: #000;
   color: #fff;
-  width: 200px;
-  height: 50px;
+  padding: 8px 20px;
   border-radius: 5px;
   text-decoration: none;
-  border-bottom: solid 4px #627295;
 }
 </style>

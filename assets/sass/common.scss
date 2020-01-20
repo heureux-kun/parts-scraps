@@ -1,3 +1,155 @@
-body{
-  background-color: $color-bg;
+@charset "UTF-8";
+/*
+=====================================================================
+*
+*    setting
+*
+* ===================================================================
+*/
+//SP&タブレット用メディアクエリ
+@mixin forSp{
+	@media only screen and ( max-width:768px ) {
+		@content;
+	}
 }
+
+//大きめタブレット〜PC用メディアクエリ
+@mixin forPc{
+	@media only screen and ( min-width:769px ) {
+		@content;
+	}
+}
+
+/*
+=====================================================================
+*
+*    Common
+*
+* =================================================================== 
+*/
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Medium");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Yu Gothic";
+  src: local("Yu Gothic Bold");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: local("Helvetica Neue Regular");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: local("Helvetica Neue Regular");
+  font-weight: 200;
+}
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
+}
+@media all and (-ms-high-contrast: none)  {
+  html {
+    font-family: Verdana, Meiryo, sans-serif;
+  }
+}
+@media all and (-ms-high-contrast: active) {
+  html {
+    font-family: Verdana, Meiryo, sans-serif;
+  }
+}
+
+body {
+  /* 日本語指定*/
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; */
+  /* ボールド指定 */
+  /* font-weight: 600; */
+  
+	font-size: 90%;
+	line-height:1.5;
+	color:#333333;
+}
+
+/*
+=====================================================================
+*
+*    class
+*
+* ===================================================================
+*/
+.alC{ text-align: center; }
+.alL{ text-align: left; }
+.alR{ text-align: right; }
+.flL{ float:left; }
+.flR{ float:right; }
+
+$i: 5;
+@while $i <= 50 {
+	.mgT#{$i} { margin-top: #{$i}px; }
+	.mgB#{$i} { margin-bottom: #{$i}px; }
+	$i: $i + 10;
+}
+
+@include forSp{
+	.forSp,
+	.forSpBlock{
+		visibility: visible;
+	}
+	.forPc{
+		visibility: hidden;
+		height: 0px;
+	}
+}
+
+@include forPc{
+	.forSp{
+		visibility: hidden;
+		height: 0px;
+	}
+	.forPc{
+		visibility: visible;
+	}
+}
+
+img{
+	max-width: 100% !important;
+	height: auto !important;
+}
+
+/*
+=====================================================================
+*
+*    Structure
+*
+* =================================================================== 
+*/
+
+/*
+=====================================================================
+*
+*    Pages
+*
+* =================================================================== 
+*/
+/*-------------------------------
+
+	about
+
+-------------------------------*/

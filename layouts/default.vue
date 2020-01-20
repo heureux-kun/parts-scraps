@@ -53,3 +53,7 @@
     </main>
   </div>
 </template>
+
+<script>
+import 'modern-css-reset'
+</script>

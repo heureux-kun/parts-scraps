@@ -14,8 +14,9 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "modern-css-reset": "^1.0.4",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

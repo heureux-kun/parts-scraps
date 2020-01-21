@@ -1,5 +1,5 @@
 <template>
-  <div id="Wrapper">
+  <div id="Content">
     index
     <button-wide />
     <counter />

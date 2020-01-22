@@ -2,11 +2,18 @@
   <div id="Wrapper">
     <header>
       <h1 id="Logo">
-        <img src="~assets/images/logo.png" alt="Parts Scraps">
+        <nuxt-link to="/">
+          <img src="~assets/images/logo.png" alt="Parts Scraps">
+        </nuxt-link>
       </h1>
       <nav>
         <ul>
-          <li><a href="#">sign in（With GitHub）</a></li>
+          <li v-if="isAuth">
+            <a @click="signIn" href="#">sign in</a>
+          </li>
+          <li v-else>
+            <a @click="signOut" href="#">sign out</a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -56,8 +63,38 @@
 </template>
 
 <script>
-import 'modern-css-reset'
-export default {
+// Firebase App (the core Firebase SDK) is always required and must be listed first
+import * as firebase from 'firebase/app'
 
+// Add the Firebase products that you want to use
+import 'firebase/auth'
+import 'firebase/firestore'
+
+// TODO: Replace the following with your app's Firebase project configuration
+const firebaseConfig = {
+  // ...
+}
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig)
+
+export default {
+  asyncData () {
+    return {
+      isAuth: false
+    }
+  },
+  mounted () {
+    firebase.auth().onAuthStateChanged(user => this.isAuth = !!user)
+  },
+  methods: {
+    signIn () {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(provider)
+    },
+    signOut () {
+      firebase.auth().signOut()
+    }
+  }
 }
 </script>

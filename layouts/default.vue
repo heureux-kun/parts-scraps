@@ -72,13 +72,7 @@ import 'firebase/firestore'
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyClprP-MVh8sr6gfm6mk1Y7kamMhnIF8iU",
-  authDomain: "parts-scraps.firebaseapp.com",
-  databaseURL: "https://parts-scraps.firebaseio.com",
-  projectId: "parts-scraps",
-  storageBucket: "parts-scraps.appspot.com",
-  messagingSenderId: "806133450445",
-  appID: "1:806133450445:web:f97a33ff900cfdc38a8b84",
+
 };
 
 // Initialize Firebase

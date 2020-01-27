@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 export default {
   mode: 'spa',
   /*
@@ -34,6 +34,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    'plugins/firebase'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,6 +49,15 @@ export default {
   modules: [
     '@nuxtjs/pwa'
   ],
+  env: {
+    FIRE_API_KEY: process.env.FIRE_API_KEY,
+    FIRE_AUTH_DOMAIN: process.env.FIRE_AUTH_DOMAIN,
+    FIRE_DATABASE_URL: process.env.FIRE_DATABASE_URL,
+    FIRE_PROJECT_ID: process.env.FIRE_PROJECT_ID,
+    FIRE_STORAGE_BUCKET: process.env.FIRE_STORAGE_BUCKET,
+    FIRE_MSG_SENDER_ID: process.env.FIRE_MSG_SENDER_ID,
+    FIRE_APP_ID: process.env.FIRE_APP_ID
+  },
   /*
   ** Build configuration
   */

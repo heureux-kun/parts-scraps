@@ -8,11 +8,10 @@
       </h1>
       <nav>
         <ul>
-          <li v-if="isAuth">
-            <a @click="signOut" href="#">sign out</a>
-          </li>
-          <li v-else>
-            <a @click="signIn" href="#">sign in</a>
+          <li>
+            <button @click="clickEvent">
+              {{ btnText }}
+            </button>
           </li>
         </ul>
       </nav>
@@ -63,40 +62,43 @@
 </template>
 
 <script>
+import firebase from '~/plugins/firebase'
 export default {
-  asyncData () {
-    return {
-      isAuth: false
+  data: () => ({
+    user: null
+  }),
+  computed: {
+    btnText () {
+      return this.user ? 'Sign Out' : 'Sign In'
     }
   },
   mounted () {
-    firebase.auth().onAuthStateChanged(user => this.isAuth = !!user)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) { this.user = user }
+    })
+    console.log(process.env.FIRE_API_KEY)
+    console.log(process.env.FIRE_AUTH_DOMAIN)
+    console.log(process.env.FIRE_DATABASE_URL)
+    console.log(process.env.FIRE_PROJECT_ID)
+    console.log(process.env.FIRE_STORAGE_BUCKET)
+    console.log(process.env.FIRE_MSG_SENDER_ID)
   },
   methods: {
     signIn () {
       const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithPopup(provider).then(function (result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const token = result.credential.accessToken
-        // The signed-in user info.
-        const user = result.user
-        // ...
-      }).catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential
+      firebase.auth().signInWithPopup(provider).then((result) => {
+        this.user = result.user
+        alert(`${this.user.displayName}でログインしました`)
       })
     },
     signOut () {
-      firebase.auth().signOut().then(function () {
-        // Sign-out successful.
-      }).catch(function (error) {
-        // An error happened.
+      firebase.auth().signOut().then((res) => {
+        this.user = null
+        alert('ログアウトしました')
       })
+    },
+    clickEvent () {
+      return this.user ? this.logout() : this.googleLogin()
     }
   }
 }

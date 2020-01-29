@@ -76,12 +76,6 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) { this.user = user }
     })
-    console.log(process.env.FIRE_API_KEY)
-    console.log(process.env.FIRE_AUTH_DOMAIN)
-    console.log(process.env.FIRE_DATABASE_URL)
-    console.log(process.env.FIRE_PROJECT_ID)
-    console.log(process.env.FIRE_STORAGE_BUCKET)
-    console.log(process.env.FIRE_MSG_SENDER_ID)
   },
   methods: {
     signIn () {
@@ -98,7 +92,7 @@ export default {
       })
     },
     clickEvent () {
-      return this.user ? this.logout() : this.googleLogin()
+      return this.user ? this.signOut() : this.signIn()
     }
   }
 }

@@ -1,22 +1,25 @@
 <template>
   <div id="Content">
     index
-    <button-wide />
-    <counter />
+    <button-default :text="text" />
+    <button-default :text="text2" :kind="kind" />
     <logo />
   </div>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
-import ButtonWide from '~/components/common/ButtonWide.vue'
-import Counter from '~/components/common/Counter.vue'
+import ButtonDefault from '~/components/common/ButtonDefault.vue'
 
 export default {
   components: {
     Logo,
-    ButtonWide,
-    Counter
-  }
+    ButtonDefault
+  },
+  data: () => ({
+    text: 'ボタンだよ',
+    text2: 'primaryボタンだよ',
+    kind: 'primary'
+  })
 }
 </script>

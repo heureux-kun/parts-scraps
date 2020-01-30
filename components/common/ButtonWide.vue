@@ -10,7 +10,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: 'Hello Vue'
+      default: 'Button Wide'
     }
   }
 }

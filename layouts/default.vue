@@ -9,9 +9,9 @@
       <nav>
         <ul>
           <li>
-            <button @click="clickEvent">
+            <button-default @click="clickEvent">
               {{ btnText }}
-            </button>
+            </button-default>
           </li>
         </ul>
       </nav>

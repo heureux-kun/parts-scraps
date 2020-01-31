@@ -16,9 +16,3 @@ storiesOf('Button', module)
       }
     }
   )
-  .add(
-    'kind', () => ({
-      components: { ButtonDefault },
-      template: `<button-default></button-default>`
-    })
-  )

@@ -8,7 +8,9 @@ storiesOf('Button', module)
     'default', () => ({
       components: { ButtonDefault },
       template: `<button-default @click.native="action"></button-default>`,
-      methods: { action: action('button-clicked') }
+      methods: {
+        action: action('button-clicked')
+      }
     }),
     {
       info: {

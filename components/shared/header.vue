@@ -7,13 +7,31 @@
     </h1>
     <nav>
       <ul>
+        <li v-if="$store.state.loggedIn">
+          <button @click="addItem">
+            + Add Item
+          </button>
+          <modal-content v-if="modalShow" @from-child="modalClose">
+            <strong>Add Item</strong><br>
+            <p>Please drag and drop.<button>or select</button></p>
+            <input-field placeholder="please enter tag" />
+            <div class="buttons">
+              <button>Submit</button>
+              <button @click="modalClose">
+                Cancel
+              </button>
+            </div>
+          </modal-content>
+        </li>
         <li v-if="$store.state.user">
-          {{ $store.state.user.displayName }}でログイン中...
+          <nuxt-link to="/mypage">
+            {{ $store.state.user.displayName }}
+          </nuxt-link>
         </li>
         <li>
-          <button-default :text="btnText" @click="signInButtonClick" />
+          <!-- <button-default :text="btnText" @click="signInButtonClick" /> -->
           <button @click="signInButtonClick">
-            ぼたん
+            {{ btnText }}
           </button>
         </li>
       </ul>
@@ -24,10 +42,19 @@
 <script>
 import firebase from '~/plugins/firebase'
 import ButtonDefault from '~/components/common/ButtonDefault.vue'
+import ModalContent from '~/components/common/ModalContent.vue'
+import InputField from '~/components/common/InputField.vue'
 
 export default {
   components: {
-    ButtonDefault
+    ButtonDefault,
+    ModalContent,
+    InputField
+  },
+  data () {
+    return {
+      modalShow: false
+    }
   },
   computed: {
     btnText () {
@@ -51,9 +78,24 @@ export default {
       })
     },
     signInButtonClick () {
-      // return this.$store.state.loggedIn ? this.signOut() : this.signIn()
-      alert('signInButtonClick!')
+      return this.$store.state.loggedIn ? this.signOut() : this.signIn()
+      // alert('signInButtonClick!')
+    },
+    addItem () {
+      this.modalShow = true
+    },
+    modalClose () {
+      this.modalShow = false
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.buttons{
+  display: flex;
+  justify-content: center;
+  button{
+    margin: 0 10px;
+  }
+}
+</style>

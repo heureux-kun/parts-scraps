@@ -8,9 +8,7 @@
     <nav>
       <ul>
         <li v-if="$store.state.loggedIn">
-          <button @click="addItem">
-            + Add Item
-          </button>
+          <button-default :text="addItemBtnText" @from-child="addItem" />
           <modal-content v-if="modalShow" @from-child="modalClose">
             <strong>Add Item</strong><br>
             <p>Please drag and drop.<button>or select</button></p>
@@ -29,10 +27,7 @@
           </nuxt-link>
         </li>
         <li>
-          <!-- <button-default :text="btnText" @click="signInButtonClick" /> -->
-          <button @click="signInButtonClick">
-            {{ btnText }}
-          </button>
+          <button-default :text="btnText" @from-child="signInButtonClick" />
         </li>
       </ul>
     </nav>
@@ -53,7 +48,8 @@ export default {
   },
   data () {
     return {
-      modalShow: false
+      modalShow: false,
+      addItemBtnText: '+ Add Item'
     }
   },
   computed: {

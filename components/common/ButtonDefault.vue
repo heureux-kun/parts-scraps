@@ -1,5 +1,5 @@
 <template>
-  <button :class="[kind]">
+  <button :class="[kind]" @click="clickEvent">
     {{ text }}
   </button>
 </template>
@@ -13,6 +13,11 @@ export default {
     kind: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    clickEvent () {
+      this.$emit('from-child')
     }
   }
 }

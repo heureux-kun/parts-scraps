@@ -10,14 +10,19 @@
         <li v-if="$store.state.loggedIn">
           <button-default :text="addItemBtnText" @from-child="addItem" />
           <modal-content v-if="modalShow" @from-child="modalClose">
-            <strong>Add Item</strong><br>
-            <p>Please drag and drop.<button>or select</button></p>
-            <input-field placeholder="please enter tag" />
+            <p class="elementTitle">
+              Add Item
+            </p>
+            <div class="imageDragArea">
+              <p>Please drag and drop image.</p>
+              <button-default :text="orSelectBtnText" class="small">
+                or select
+              </button-default>
+            </div>
+            <input-field placeholder="please enter tag..." class="withFull" />
             <div class="buttons">
-              <button>Submit</button>
-              <button @click="modalClose">
-                Cancel
-              </button>
+              <button-default :text="submitText" />
+              <button-default :text="cancelText" @from-child="modalClose" />
             </div>
           </modal-content>
         </li>
@@ -49,7 +54,10 @@ export default {
   data () {
     return {
       modalShow: false,
-      addItemBtnText: '+ Add Item'
+      addItemBtnText: '+ Add Item',
+      orSelectBtnText: 'or select',
+      submitText: 'Submit',
+      cancelText: 'Cancel'
     }
   },
   computed: {
@@ -90,8 +98,19 @@ export default {
 .buttons{
   display: flex;
   justify-content: center;
+  margin-top: 15px;
   button{
     margin: 0 10px;
   }
+}
+.imageDragArea{
+  text-align: center;
+  background-color: #eeeeee;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 </style>

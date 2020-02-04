@@ -44,8 +44,11 @@ export default {
   position: relative;
   z-index: 2;
   width: 50%;
-  padding: 1em;
+  padding: 20px;
   background:#fff;
+  p{
+    margin-bottom: 10px;
+  }
 }
 .closeButton{
   position: absolute;

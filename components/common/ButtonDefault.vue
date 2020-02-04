@@ -24,12 +24,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  font-size: 12px;
+  font-size: 80%;
   border-color: #000;
   color: #000;
   padding: 8px 20px;
   border-radius: 5px;
   text-decoration: none;
+  &.small{
+    font-size: 70%;
+    padding: 6px 10px;
+  }
   &.primary{
     color: #FFF;
     background-color: red;

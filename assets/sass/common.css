@@ -205,6 +205,11 @@ img {
   height: auto !important;
 }
 
+.elementTitle {
+  font-size: 110%;
+  font-weight: bold;
+}
+
 /*
 =====================================================================
 *

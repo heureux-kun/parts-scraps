@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 export default {
-  mode: 'spa',
+  mode: 'ssr',
   /*
   ** Headers of the page
   */
@@ -49,8 +49,16 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/axios'
   ],
+  /*
+  ** Axios module configuration
+  ** See https://axios.nuxtjs.org/options
+  */
+  axios: {
+    baseURL: 'https://jsonplaceholder.typicode.com/'
+  },
   env: {
     FIRE_API_KEY: process.env.FIRE_API_KEY,
     FIRE_AUTH_DOMAIN: process.env.FIRE_AUTH_DOMAIN,

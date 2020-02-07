@@ -15,13 +15,12 @@
             </p>
             <div class="imageDragArea">
               <p>Please drag and drop image.</p>
-              <button-default :text="orSelectBtnText" class="small">
-                or select
-              </button-default>
+              or select
+              <input type="file" class="small">
             </div>
-            <input-field placeholder="please enter tag..." class="withFull" />
+            <input-field v-model="tagInputContent" placeholder="please enter tag..." class="withFull" />
             <div class="buttons">
-              <button-default :text="submitText" />
+              <button-default :text="submitText" @from-child="itemRegister(); modalClose();" />
               <button-default :text="cancelText" @from-child="modalClose" />
             </div>
           </modal-content>
@@ -45,6 +44,25 @@ import ButtonDefault from '~/components/common/ButtonDefault.vue'
 import ModalContent from '~/components/common/ModalContent.vue'
 import InputField from '~/components/common/InputField.vue'
 
+const db = firebase.firestore()
+
+db.collection('users').get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    // console.log('user：' + doc.id)
+    console.log('user：' + doc.data().name)
+  })
+})
+// db.collection('users').add({
+//   name: 'Harry Bosch',
+//   age: 16
+// })
+//   .then(function (docRef) {
+//     console.log('Document written with ID: ', docRef.id)
+//   })
+//   .catch(function (error) {
+//     console.error('Error adding document: ', error)
+//   })
+
 export default {
   components: {
     ButtonDefault,
@@ -57,7 +75,8 @@ export default {
       addItemBtnText: '+ Add Item',
       orSelectBtnText: 'or select',
       submitText: 'Submit',
-      cancelText: 'Cancel'
+      cancelText: 'Cancel',
+      tagInputContent: ''
     }
   },
   computed: {
@@ -90,6 +109,19 @@ export default {
     },
     modalClose () {
       this.modalShow = false
+    },
+    itemRegister () {
+      db.collection('items').add({
+        image: '',
+        tag: this.tagInputContent
+      })
+        .then(function (docRef) {
+          console.log('Document written with ID: ', docRef.id)
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error)
+        })
+      this.tagInputContent = ''
     }
   }
 }

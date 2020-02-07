@@ -1,5 +1,12 @@
 <template>
-  <input :placeholder="[placeholderText]" :class="[width]" type="text" name="tag" value="">
+  <input
+    :placeholder="[placeholderText]"
+    :class="[width]"
+    v-bind:value="value"
+    v-on:input="$emit('input', $event.target.value)"
+    type="text"
+    name="tag"
+  >
 </template>
 
 <script>
@@ -10,6 +17,10 @@ export default {
       default: '...'
     },
     width: {
+      type: String,
+      default: ''
+    },
+    value: {
       type: String,
       default: ''
     }

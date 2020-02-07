@@ -33,6 +33,17 @@ ul {
   list-style: none;
 }
 
+input, button, textarea, select {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 /*
 =====================================================================
 *

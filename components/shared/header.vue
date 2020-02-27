@@ -16,7 +16,7 @@
             <div class="imageDragArea">
               <p>Please drag and drop image.</p>
               or select
-              <input type="file" class="small">
+              <input @change="fileChanged($event)" type="file">
             </div>
             <input-field v-model="tagInputContent" placeholder="please enter tag..." class="withFull" />
             <div class="buttons">
@@ -39,7 +39,9 @@
 </template>
 
 <script>
+import uuid from 'uuid'
 import firebase from '~/plugins/firebase'
+
 import ButtonDefault from '~/components/common/ButtonDefault.vue'
 import ModalContent from '~/components/common/ModalContent.vue'
 import InputField from '~/components/common/InputField.vue'
@@ -49,7 +51,7 @@ const db = firebase.firestore()
 db.collection('users').get().then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
     // console.log('user：' + doc.id)
-    console.log('user：' + doc.data().name)
+    // console.log('user：' + doc.data().name)
   })
 })
 // db.collection('users').add({
@@ -68,6 +70,20 @@ export default {
     ButtonDefault,
     ModalContent,
     InputField
+  },
+  async fileChanged (e) {
+    const file = (e.target.files || e.dataTransfer.file)[0]
+    if (file) {
+      const fileName = uuid()
+      try {
+        const uploadTask = await this.$store.dispatch('../database/uploadFile', {
+          fileName,
+          file
+        })
+      } catch (error) {
+        console.error('file upload', error)
+      }
+    }
   },
   data () {
     return {

@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 export default {
-  mode: 'ssr',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -27,8 +27,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/main.css',
-    { src: '~/assets/sass/app.scss', lang: 'scss' },
+    '~/assets/sass/app.scss',
     'modern-css-reset'
   ],
   /*

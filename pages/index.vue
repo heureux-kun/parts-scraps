@@ -1,6 +1,6 @@
 <template>
   <div id="Content">
-    {{ items }}
+    {{ getItmes }}
     <!-- <div v-for="item in items" :key="item.id">
       {{ item.category }}
     </div> -->
@@ -26,36 +26,15 @@ export default {
       items: []
     }
   },
-  // computed: {
-  //   // dispatchで「nuxtServerInit」のactionを呼び出す
-  //   getItmes () {
-  //     console.log('computed')
-  //     return this.$store.dispatch('nuxtServerInit')
-  //   }
-  // },
-  created () {
-    this.fetchItems()
-    console.log('created')
+  computed: {
+    getItmes () {
+      return this.$store.getters.items
+    }
   },
-  mounted () {
-    // getter経由でitemを取得する
-    this.items = this.$store.getters.items
-    console.log('mounted')
+  created () {
+    this.$store.dispatch('nuxtServerInit')
   },
   methods: {
-    fetchItems () {
-      this.$store.dispatch('nuxtServerInit')
-    }
-    // getData () {
-    //   const db = firebase.firestore()
-    //   const itemArray = []
-    //   db.collection('item').get().then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //       itemArray.push(doc.data())
-    //     })
-    //     this.item = itemArray
-    //   })
-    // }
   }
 }
 </script>

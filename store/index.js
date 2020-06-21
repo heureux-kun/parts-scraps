@@ -67,54 +67,12 @@ export const actions = {
       // })
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // itemArray.push(doc.data())
           itemArray.push({
             id: doc.id,
             ...doc.data()
           })
         })
-        console.log(itemArray)
         commit('setItems', { itemArray })
       })
   }
-
-  // nuxtServerInit({ commit }) {
-  //   const db = firebase.firestore()
-  //   const itemArray = []
-  //   db.collection('item')
-  //     .get()
-  //     // .then((snapshot) => {
-  //     //   snapshot.forEach(doc => commit('setItems', doc.data()))
-  //     // })
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         // itemArray.push(doc.data())
-  //         itemArray.push({
-  //           id: doc.id,
-  //           ...doc.data()
-  //         })
-  //       })
-  //       console.log(itemArray)
-  //       commit('setItems', { itemArray })
-  //     })
-  // }
-
-  // async nuxtServerInit({ commit }) {
-  //   const db = firebase.firestore()
-  //   const itemArray = []
-  //   const [querySnapshot] = await Promise.all([
-  //     db.collection('item')
-  //       .get()
-  //   ])
-
-  //   querySnapshot.forEach((doc) => {
-  //     // itemArray.push(doc.data())
-  //     itemArray.push({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     })
-  //   })
-  //   console.log(itemArray)
-  //   commit('setItems', { itemArray })
-  // }
 }

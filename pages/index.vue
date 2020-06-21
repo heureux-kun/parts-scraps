@@ -1,9 +1,8 @@
 <template>
   <div id="Content">
-    {{ getItmes }}
-    <!-- <div v-for="item in items" :key="item.id">
-      {{ item.category }}
-    </div> -->
+    <div v-for="item in getItmes" :key="item.id">
+      {{ item.image }} {{ item.category }}
+    </div>
   </div>
 </template>
 

@@ -60,24 +60,22 @@ export const actions = {
   nuxtServerInit({ commit }) {
     const db = firebase.firestore()
     const itemArray = []
-    asyncData(){
-      db.collection('item')
-        .get()
-        // .then((snapshot) => {
-        //   snapshot.forEach(doc => commit('setItems', doc.data()))
-        // })
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            // itemArray.push(doc.data())
-            itemArray.push({
-              id: doc.id,
-              ...doc.data()
-            })
+    db.collection('item')
+      .get()
+      // .then((snapshot) => {
+      //   snapshot.forEach(doc => commit('setItems', doc.data()))
+      // })
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // itemArray.push(doc.data())
+          itemArray.push({
+            id: doc.id,
+            ...doc.data()
           })
-          console.log(itemArray)
-          commit('setItems', { itemArray })
         })
-    }
+        console.log(itemArray)
+        commit('setItems', { itemArray })
+      })
   }
 
   // nuxtServerInit({ commit }) {

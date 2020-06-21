@@ -2,7 +2,7 @@
   <header>
     <h1 id="Logo">
       <nuxt-link to="/">
-        <img src="~assets/images/logo.png" alt="Parts Scraps">
+        <img src="~/assets/images/logo.png" alt="Parts Scraps">
       </nuxt-link>
     </h1>
     <nav>
@@ -18,7 +18,7 @@
               or select
               <input @change="fileChanged($event)" type="file">
             </div>
-            <input-field v-model="tagInputContent" placeholder="please enter tag..." class="withFull" />
+            <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" />
             <div class="buttons">
               <button-default :text="submitText" @from-child="itemRegister(); modalClose();" />
               <button-default :text="cancelText" @from-child="modalClose" />
@@ -26,7 +26,7 @@
           </modal-content>
         </li>
         <li v-if="$store.state.user">
-          <nuxt-link to="/mypage">
+          <nuxt-link to="/users/">
             {{ $store.state.user.displayName }}
           </nuxt-link>
         </li>
@@ -48,10 +48,10 @@ import InputField from '~/components/common/InputField.vue'
 
 const db = firebase.firestore()
 
-db.collection('users').get().then((querySnapshot) => {
+db.collection('item').get().then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
-    // console.log('user：' + doc.id)
-    // console.log('user：' + doc.data().name)
+    // console.log('item：' + doc.id)
+    // console.log('item：' + doc.data().category)
   })
 })
 // db.collection('users').add({
@@ -92,7 +92,7 @@ export default {
       orSelectBtnText: 'or select',
       submitText: 'Submit',
       cancelText: 'Cancel',
-      tagInputContent: ''
+      categoryInputContent: ''
     }
   },
   computed: {
@@ -127,9 +127,9 @@ export default {
       this.modalShow = false
     },
     itemRegister () {
-      db.collection('items').add({
+      db.collection('item').add({
         image: '',
-        tag: this.tagInputContent
+        category: this.categoryInputContent
       })
         .then(function (docRef) {
           console.log('Document written with ID: ', docRef.id)
@@ -137,7 +137,7 @@ export default {
         .catch(function (error) {
           console.error('Error adding document: ', error)
         })
-      this.tagInputContent = ''
+      this.categoryInputContent = ''
     }
   }
 }

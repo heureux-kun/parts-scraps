@@ -5,7 +5,7 @@
     v-bind:value="value"
     v-on:input="$emit('input', $event.target.value)"
     type="text"
-    name="tag"
+    name="category"
   >
 </template>
 

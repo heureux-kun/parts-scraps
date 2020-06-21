@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 const config = {
   apiKey: process.env.FIRE_API_KEY,
@@ -19,3 +20,8 @@ try {
 }
 
 export default firebase
+// export default (context, inject) => {
+//   inject('firebase', firebase)
+//   inject('firestore', firebase.firestore())
+//   inject('auth', firebase.auth())
+// }

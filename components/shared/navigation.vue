@@ -2,8 +2,8 @@
   <aside>
     <nav id="Category">
       <ul>
-        <li v-for="item in items" :key="item.id">
-          <a :href="item.link">{{ item.name }}</a>
+        <li v-for="category in categories" :key="category.id">
+          <a :href="category.link">{{ category.name }}</a>
         </li>
       </ul>
     </nav>
@@ -14,7 +14,7 @@
 export default {
   data () {
     return {
-      items: [
+      categories: [
         { name: 'header', link: '#' },
         { name: 'global navigation', link: '#' },
         { name: 'breadcrumb list', link: '#' },

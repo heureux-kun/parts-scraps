@@ -57,7 +57,7 @@ export const actions = {
     commit('setUser', null)
     commit('setloggedIn', false)
   },
-  nuxtServerInit({ commit }) {
+  fetchItems({ commit }) {
     const db = firebase.firestore()
     const itemArray = []
     db.collection('item')

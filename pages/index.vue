@@ -32,7 +32,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('nuxtServerInit')
+    this.$store.dispatch('fetchItems')
   },
   methods: {
   }

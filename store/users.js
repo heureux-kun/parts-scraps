@@ -30,13 +30,13 @@ export const actions = {
     return new Promise((resolve, reject) => {
       // firestoreにファイルをアップロード
       const uploadTask = firestorage
-        // .ref('users/' + this.id + '/images/' + file.name)
-        .ref('images/' + payload.name)
+        .ref('images/parts/' + payload.name)
         .put(payload.file)
         .then((snapshot) => {
           // アップロード完了処理。URLを取得し、呼び出し元へ返す。
           snapshot.ref.getDownloadURL().then((url) => {
             resolve(url)
+            console.log(url)
           })
         })
     })

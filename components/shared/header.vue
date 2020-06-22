@@ -92,7 +92,10 @@ export default {
       orSelectBtnText: 'or select',
       submitText: 'Submit',
       cancelText: 'Cancel',
-      categoryInputContent: ''
+      categoryInputContent: '',
+      file: '',
+      fileName: '',
+      imageUrl: ''
     }
   },
   computed: {
@@ -126,9 +129,30 @@ export default {
     modalClose () {
       this.modalShow = false
     },
+    detectFiles (e) {
+      // imageUrlを空に
+      this.imageUrl = ''
+
+      // アップロード対象は1件のみとする
+      this.file = (e.target.files || e.dataTransfer.files)[0]
+      if (this.file) {
+        this.fileName = uuid()
+      }
+    },
     itemRegister () {
+      /* 画像のアップロード */
+      this.$store.dispatch('users/uploadImage', {
+        name: this.fileName,
+        file: this.file
+      })
+        .then((url) => {
+        // アップロード完了処理（ローカルメンバに保存したり）
+          this.imageUrl = url
+        })
+
+      /* categoryのアップロード */
       db.collection('item').add({
-        image: '',
+        image: this.fileName,
         category: this.categoryInputContent
       })
         .then(function (docRef) {
@@ -138,23 +162,6 @@ export default {
           console.error('Error adding document: ', error)
         })
       this.categoryInputContent = ''
-    },
-    detectFiles (e) {
-      // アップロード対象は1件のみとする
-      const file = (e.target.files || e.dataTransfer.files)[0]
-      if (file) {
-        const fileName = uuid()
-
-        this.$store.dispatch('users/uploadImage', {
-          name: fileName,
-          file
-        })
-          .then((url) => {
-          // アップロード完了処理（ローカルメンバに保存したり）
-            this.fileName = fileName
-            this.imageUrl = url
-          })
-      }
     }
   }
 }

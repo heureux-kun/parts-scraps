@@ -16,7 +16,7 @@
             <div class="imageDragArea">
               <p>Please drag and drop image.</p>
               or select
-              <input @change="fileChanged($event)" type="file">
+              <input @change="detectFiles" type="file">
             </div>
             <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" />
             <div class="buttons">
@@ -71,20 +71,20 @@ export default {
     ModalContent,
     InputField
   },
-  async fileChanged (e) {
-    const file = (e.target.files || e.dataTransfer.file)[0]
-    if (file) {
-      const fileName = uuid()
-      try {
-        const uploadTask = await this.$store.dispatch('../database/uploadFile', {
-          fileName,
-          file
-        })
-      } catch (error) {
-        console.error('file upload', error)
-      }
-    }
-  },
+  // async fileChanged (e) {
+  //   const file = (e.target.files || e.dataTransfer.file)[0]
+  //   if (file) {
+  //     const fileName = uuid()
+  //     try {
+  //       const uploadTask = await this.$store.dispatch('../database/uploadFile', {
+  //         fileName,
+  //         file
+  //       })
+  //     } catch (error) {
+  //       console.error('file upload', error)
+  //     }
+  //   }
+  // }
   data () {
     return {
       modalShow: false,
@@ -138,10 +138,28 @@ export default {
           console.error('Error adding document: ', error)
         })
       this.categoryInputContent = ''
+    },
+    detectFiles (e) {
+      // アップロード対象は1件のみとする
+      const file = (e.target.files || e.dataTransfer.files)[0]
+      if (file) {
+        const fileName = uuid()
+
+        this.$store.dispatch('users/uploadImage', {
+          name: fileName,
+          file
+        })
+          .then((url) => {
+          // アップロード完了処理（ローカルメンバに保存したり）
+            this.fileName = fileName
+            this.imageUrl = url
+          })
+      }
     }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .buttons{
   display: flex;

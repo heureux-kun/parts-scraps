@@ -2,17 +2,9 @@
   <div id="Content">
     <ul v-for="item in getItmes" :key="item.id">
       <li>
-        <img
-          v-bind:src="item.downloadUrl"
-          {{
-          item.category
-          }}
-          {{
-          item.imageUrl
-          }}
-          <
-          li
-        >
+        <img v-bind:src="item.downloadUrl">
+        {{ item.category }}
+        {{ item.imageUrl }}
       </li>
     </ul>
   </div>

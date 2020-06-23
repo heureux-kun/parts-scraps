@@ -1,20 +1,8 @@
 <template>
   <div id="Content">
-    <ul v-for="item in getItmes" :key="item.id">
-      <li>
-        <img
-          v-bind:src="item.downloadUrl"
-          {{
-          item.category
-          }}
-          {{
-          item.imageUrl
-          }}
-          <
-          li
-        >
-      </li>
-    </ul>
+    <div v-for="item in getItmes" :key="item.id">
+      {{ item.image }} {{ item.category }}
+    </div>
   </div>
 </template>
 
@@ -23,8 +11,10 @@ import firebase from '~/plugins/firebase'
 // import Item from '~/components/Item.vue'
 
 // 画像の取得テスト
-// const url = firebase.storage().ref().child('images/images01.jpg').getDownloadURL()
-// console.log('url：' + url)
+const storage = firebase.storage()
+const storageRef = storage.ref()
+const image = storageRef.child('images/images01.jpg')
+console.log('downRef：' + image)
 
 export default {
   components: {
@@ -37,14 +27,11 @@ export default {
   },
   computed: {
     getItmes () {
-      return this.$store.getters['items/items']
-    },
-    limitCount () {
-      return this.members
+      return this.$store.getters.items
     }
   },
   created () {
-    this.$store.dispatch('items/fetchItems')
+    this.$store.dispatch('fetchItems')
   },
   methods: {
   }

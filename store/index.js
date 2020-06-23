@@ -5,14 +5,17 @@ import firebase from '~/plugins/firebase'
 ======================= */
 export const state = () => ({
   user: null,
-  loggedIn: false
+  loggedIn: false,
+  items: []
 })
 
 /* ======================
  getters
 ======================= */
 export const getters = {
-
+  items: (state) => {
+    return state.items
+  }
 }
 
 /* ======================
@@ -25,6 +28,9 @@ export const mutations = {
   },
   setloggedIn(state, payload) {
     state.loggedIn = payload
+  },
+  setItems(state, payload) {
+    state.items = payload
   }
 }
 
@@ -50,5 +56,23 @@ export const actions = {
   signOut({ commit }) {
     commit('setUser', null)
     commit('setloggedIn', false)
+  },
+  fetchItems({ commit }) {
+    const db = firebase.firestore()
+    const itemArray = []
+    db.collection('item')
+      .get()
+      // .then((snapshot) => {
+      //   snapshot.forEach(doc => commit('setItems', doc.data()))
+      // })
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          itemArray.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+        commit('setItems', { itemArray })
+      })
   }
 }

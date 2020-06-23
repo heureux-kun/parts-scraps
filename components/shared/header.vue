@@ -129,7 +129,6 @@ export default {
     modalClose () {
       this.modalShow = false
     },
-    // 画像を検出 （ファイル名を取得）====================s
     detectFiles (e) {
       // imageUrlを空に
       this.imageUrl = ''
@@ -141,8 +140,8 @@ export default {
       }
     },
     itemRegister () {
-      // storageに画像のアップロード（items.jsのactionを呼び出し） ====================
-      this.$store.dispatch('items/uploadImage', {
+      /* 画像のアップロード */
+      this.$store.dispatch('users/uploadImage', {
         name: this.fileName,
         file: this.file
       })
@@ -151,18 +150,17 @@ export default {
           this.imageUrl = url
         })
 
-      // firestoreにimageとcategoryのアップロード ====================
+      /* categoryのアップロード */
       db.collection('item').add({
         image: this.fileName,
         category: this.categoryInputContent
       })
         .then(function (docRef) {
-          console.log(downloadUrl)
+          console.log('Document written with ID: ', docRef.id)
         })
         .catch(function (error) {
           console.error('Error adding document: ', error)
         })
-
       this.categoryInputContent = ''
     }
   }

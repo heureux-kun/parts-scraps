@@ -15,6 +15,9 @@ export const state = () => ({
 export const getters = {
   items: (state) => {
     return state.items
+  },
+  itemsHeader: (state) => {
+    return state.itemsHeader
   }
 }
 
@@ -34,7 +37,7 @@ export const mutations = {
  actions
 ======================= */
 export const actions = {
-  // 最初のitemの取得 ========================
+  // itemの取得 ========================
   fetchItems({ commit }) {
     const bucketName = 'parts-scraps.appspot.com'
     const db = firebase.firestore()
@@ -56,18 +59,18 @@ export const actions = {
         })
         commit('setItems', itemArray)
       })
-
-    /* header */
+  },
+  // headerの取得 ========================
+  fetchItemsHeader({ commit }) {
+    const bucketName = 'parts-scraps.appspot.com'
+    const db = firebase.firestore()
     const itemArrayHeader = []
     db.collection('item')
-      .where('category', '==', '6')
+      .where('category', '==', '3')
       .get()
-      // .then((snapshot) => {
-      //   snapshot.forEach(doc => commit('setItems', doc.data()))
-      // })
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          itemArray.push({
+          itemArrayHeader.push({
             id: doc.id,
             downloadUrl: 'https://firebasestorage.googleapis.com/v0/b/' + bucketName + '/o/' + encodeURIComponent('images/parts/' + doc.data().image) + '?alt=media&token=',
             // downloadUrl: doc.data().image,
@@ -75,6 +78,7 @@ export const actions = {
             ...doc.data()
           })
         })
+        console.log(itemArrayHeader)
         commit('setItemsHeader', itemArrayHeader)
       })
   },

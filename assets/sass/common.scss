@@ -40,7 +40,8 @@ article, aside, canvas, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section, summary,
 time, mark, audio, video{
 	margin:0px;
-	padding:0px;
+  padding:0px;
+  box-sizing: border-box;
 }
 ul { list-style:none; }
 
@@ -219,6 +220,7 @@ aside{
 }
 main{
   grid-area: 2 / 2 / 3 / 3;
+  padding: 0 10px 0 30px;
 }
 footer{
   grid-area: 3 / 1 / 4 / 3;

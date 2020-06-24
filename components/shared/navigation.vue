@@ -3,7 +3,9 @@
     <nav id="Category">
       <ul>
         <li v-for="category in categories" :key="category.id">
-          <a :href="category.link">{{ category.name }}</a>
+          <nuxt-link :to="'/parts/'+category.link">
+            {{ category.name }}
+          </nuxt-link>
         </li>
       </ul>
     </nav>
@@ -15,13 +17,13 @@ export default {
   data () {
     return {
       categories: [
-        { name: 'header', link: '#' },
-        { name: 'global navigation', link: '#' },
-        { name: 'breadcrumb list', link: '#' },
-        { name: 'page top', link: '#' },
-        { name: 'card', link: '#' },
-        { name: 'form', link: '#' },
-        { name: 'footer', link: '#' }
+        { id: 1, name: 'header', link: 'header' },
+        { id: 2, name: 'global navigation', link: 'global-navigation' },
+        { id: 3, name: 'breadcrumb list', link: 'breadcrumb-list' },
+        { id: 4, name: 'pagetop', link: 'pagetop' },
+        { id: 5, name: 'card', link: 'card' },
+        { id: 6, name: 'form', link: 'form' },
+        { id: 7, name: 'footer', link: 'footer' }
       ]
     }
   }

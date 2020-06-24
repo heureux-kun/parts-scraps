@@ -1,10 +1,9 @@
 <template>
   <div id="Content">
-    <ul v-for="item in getItmes" :key="item.id">
-      <li>
+    <ul class="itemsWrapper">
+      <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">
-        {{ item.category }}
-        {{ item.imageUrl }}
+        <span class="categoryName">{{ this.categories[2].name }}{{ item.category }}</span>
       </li>
     </ul>
   </div>
@@ -24,6 +23,15 @@ export default {
   },
   data () {
     return {
+      categories: [
+        { id: 1, name: 'header', link: 'header' },
+        { id: 2, name: 'global navigation', link: 'global-navigation' },
+        { id: 3, name: 'breadcrumb list', link: 'breadcrumb-list' },
+        { id: 4, name: 'pagetop', link: 'pagetop' },
+        { id: 5, name: 'card', link: 'card' },
+        { id: 6, name: 'form', link: 'form' },
+        { id: 7, name: 'footer', link: 'footer' }
+      ],
       items: []
     }
   },
@@ -42,3 +50,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.itemsWrapper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  li{
+    flex-basis: 300px;
+    margin-bottom: 20px;
+  }
+}
+</style>

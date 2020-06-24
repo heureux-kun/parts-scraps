@@ -5,7 +5,8 @@ const firestorage = firebase.storage()
  state
 ======================= */
 export const state = () => ({
-  items: []
+  items: [],
+  itemsHeader: []
 })
 
 /* ======================
@@ -23,6 +24,9 @@ export const getters = {
 export const mutations = {
   setItems(state, payload) {
     state.items = payload
+  },
+  setItemsHeader(state, payload) {
+    state.itemsHeader = payload
   }
 }
 
@@ -51,6 +55,27 @@ export const actions = {
           })
         })
         commit('setItems', itemArray)
+      })
+
+    /* header */
+    const itemArrayHeader = []
+    db.collection('item')
+      .where('category', '==', '6')
+      .get()
+      // .then((snapshot) => {
+      //   snapshot.forEach(doc => commit('setItems', doc.data()))
+      // })
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          itemArray.push({
+            id: doc.id,
+            downloadUrl: 'https://firebasestorage.googleapis.com/v0/b/' + bucketName + '/o/' + encodeURIComponent('images/parts/' + doc.data().image) + '?alt=media&token=',
+            // downloadUrl: doc.data().image,
+            // downloadUrl: doc.id,
+            ...doc.data()
+          })
+        })
+        commit('setItemsHeader', itemArrayHeader)
       })
   },
   // storageに画像のアップロード（vuex上ではなくvueファイルのmethodでできる？） ====================

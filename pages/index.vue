@@ -1,9 +1,8 @@
 <template>
   <div id="Content">
     <ul class="itemsWrapper">
-      <li v-for="item in getItmes" :key="item.id">
+      <li v-for="item in getItmesHeader" :key="item.id">
         <img v-bind:src="item.downloadUrl">
-        <span class="categoryName">{{ this.categories[2].name }}{{ item.category }}</span>
       </li>
     </ul>
   </div>
@@ -36,8 +35,8 @@ export default {
     }
   },
   computed: {
-    getItmes () {
-      return this.$store.getters['items/items']
+    getItmesHeader () {
+      return this.$store.getters['items/itemsHeader']
     },
     limitCount () {
       return this.members

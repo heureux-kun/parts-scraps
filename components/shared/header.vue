@@ -18,7 +18,17 @@
               or select
               <input @change="detectFiles" type="file">
             </div>
-            <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" />
+
+            <ul class="categoryButtons">
+              <li v-for="category in categories" :key="category.id">
+                <a @click="setCategory(category.id)" href="#">
+                  {{ category.name }}
+                </a>
+              </li>
+            </ul>
+
+            <!-- <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" /> -->
+
             <div class="buttons">
               <button-default :text="submitText" @from-child="itemRegister(); modalClose();" />
               <button-default :text="cancelText" @from-child="modalClose" />
@@ -92,10 +102,12 @@ export default {
       orSelectBtnText: 'or select',
       submitText: 'Submit',
       cancelText: 'Cancel',
-      categoryInputContent: '',
+      // categoryInputContent: '',
+      addItemCategoryId: '',
       file: '',
       fileName: '',
-      imageUrl: ''
+      imageUrl: '',
+      categories: this.$store.state.categories
     }
   },
   computed: {
@@ -129,6 +141,9 @@ export default {
     modalClose () {
       this.modalShow = false
     },
+    setCategory (id) {
+      this.addItemCategoryId = id
+    },
     // 画像を検出 （ファイル名を取得）====================s
     detectFiles (e) {
       // imageUrlを空に
@@ -141,9 +156,9 @@ export default {
       }
     },
     itemRegister () {
-      // storageに画像のアップロード（items.jsのactionを呼び出し） ====================
+      // storageに画像のアップロード（items.jsのactionを呼び出し（intem.jsに入れなくてもできる？）） ====================
       this.$store.dispatch('items/uploadImage', {
-        name: this.fileName,
+        fileName: this.fileName,
         file: this.file
       })
         .then((url) => {
@@ -151,19 +166,19 @@ export default {
           this.imageUrl = url
         })
 
-      // firestoreにimageとcategoryのアップロード ====================
+      // firestoreにfileNameとcategoryIdのアップロード ====================
       db.collection('item').add({
-        image: this.fileName,
-        category: this.categoryInputContent
+        fileName: this.fileName,
+        categoryId: this.addItemCategoryId
       })
         .then(function (docRef) {
-          console.log(downloadUrl)
+          // console.log(downloadUrl)
         })
         .catch(function (error) {
           console.error('Error adding document: ', error)
         })
 
-      this.categoryInputContent = ''
+      this.addItemCategoryId = ''
     }
   }
 }

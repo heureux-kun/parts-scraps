@@ -1,7 +1,7 @@
 <template>
   <div id="Content">
     <h1 class="title">
-      form
+      title
     </h1>
     <ul class="itemsWrapper">
       <li v-for="item in getItmes" :key="item.id">
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-const number = '06'
+const number = '08'
 export default {
   components: {
     // Item

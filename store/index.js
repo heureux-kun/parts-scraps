@@ -5,7 +5,17 @@ import firebase from '~/plugins/firebase'
 ======================= */
 export const state = () => ({
   user: null,
-  loggedIn: false
+  loggedIn: false,
+  categories: [
+    { id: 1, name: 'header', slug: 'header' },
+    { id: 2, name: 'global navigation', slug: 'global-navigation' },
+    { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list' },
+    { id: 4, name: 'pagetop', slug: 'pagetop' },
+    { id: 5, name: 'card', slug: 'card' },
+    { id: 6, name: 'form', slug: 'form' },
+    { id: 7, name: 'footer', slug: 'footer' },
+    { id: 8, name: 'title', slug: 'title' }
+  ]
 })
 
 /* ======================

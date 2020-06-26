@@ -4,7 +4,7 @@
       header
     </h1>
     <ul class="itemsWrapper">
-      <li v-for="item in getItmesHeader" :key="item.id">
+      <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">
       </li>
     </ul>
@@ -12,31 +12,23 @@
 </template>
 
 <script>
+const number = '01'
 export default {
   components: {
     // Item
   },
   data () {
     return {
-      categories: [
-        { id: 1, name: 'header', link: 'header' },
-        { id: 2, name: 'global navigation', link: 'global-navigation' },
-        { id: 3, name: 'breadcrumb list', link: 'breadcrumb-list' },
-        { id: 4, name: 'pagetop', link: 'pagetop' },
-        { id: 5, name: 'card', link: 'card' },
-        { id: 6, name: 'form', link: 'form' },
-        { id: 7, name: 'footer', link: 'footer' }
-      ],
       items: []
     }
   },
   computed: {
-    getItmesHeader () {
-      return this.$store.getters['items/itemsHeader']
+    getItmes () {
+      return this.$store.getters['items/itemsCategory' + number]
     }
   },
   created () {
-    this.$store.dispatch('items/fetchItemsHeader')
+    this.$store.dispatch('items/fetchItemsCategory' + number)
   },
   methods: {
   }

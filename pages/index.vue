@@ -1,7 +1,7 @@
 <template>
   <div id="Content">
     <ul class="itemsWrapper">
-      <li v-for="item in getItmesHeader" :key="item.id">
+      <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">
       </li>
     </ul>
@@ -22,24 +22,13 @@ export default {
   },
   data () {
     return {
-      categories: [
-        { id: 1, name: 'header', link: 'header' },
-        { id: 2, name: 'global navigation', link: 'global-navigation' },
-        { id: 3, name: 'breadcrumb list', link: 'breadcrumb-list' },
-        { id: 4, name: 'pagetop', link: 'pagetop' },
-        { id: 5, name: 'card', link: 'card' },
-        { id: 6, name: 'form', link: 'form' },
-        { id: 7, name: 'footer', link: 'footer' }
-      ],
+      categories: this.$store.state.categories,
       items: []
     }
   },
   computed: {
-    getItmesHeader () {
-      return this.$store.getters['items/itemsHeader']
-    },
-    limitCount () {
-      return this.members
+    getItmes () {
+      return this.$store.getters['items/items']
     }
   },
   created () {

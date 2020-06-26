@@ -7,14 +7,15 @@ export const state = () => ({
   user: null,
   loggedIn: false,
   categories: [
-    { id: 1, name: 'header', slug: 'header' },
-    { id: 2, name: 'global navigation', slug: 'global-navigation' },
-    { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list' },
-    { id: 4, name: 'pagetop', slug: 'pagetop' },
-    { id: 5, name: 'card', slug: 'card' },
-    { id: 6, name: 'form', slug: 'form' },
-    { id: 7, name: 'footer', slug: 'footer' },
-    { id: 8, name: 'title', slug: 'title' }
+    { id: 1, name: 'header', slug: 'header', sort: 1 },
+    { id: 2, name: 'global navigation', slug: 'global-navigation', sort: 2 },
+    { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list', sort: 3 },
+    { id: 4, name: 'pagetop', slug: 'pagetop', sort: 4 },
+    { id: 5, name: 'title', slug: 'title', sort: 5 },
+    { id: 6, name: 'card', slug: 'card', sort: 6 },
+    { id: 7, name: 'form', slug: 'form', sort: 7 },
+    { id: 8, name: 'footer', slug: 'footer', sort: 8 },
+    { id: 9, name: 'others', slug: 'others', sort: 9 }
   ]
 })
 

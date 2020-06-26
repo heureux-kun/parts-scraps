@@ -1,7 +1,7 @@
 <template>
   <div id="Content">
     <h1 class="title">
-      form
+      {{ $store.state.categories[$route.params.id].name }}
     </h1>
     <ul class="itemsWrapper">
       <li v-for="item in getItmes" :key="item.id">
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-const number = '06'
+const number = '03'
 export default {
   components: {
     // Item
@@ -24,13 +24,8 @@ export default {
   },
   computed: {
     getItmes () {
-      return this.$store.getters['items/itemsCategory' + number]
+      return this.$store.getters['items/itemsCategory' + this.$route.params.id]
     }
-  },
-  created () {
-    this.$store.dispatch('items/fetchItemsCategory' + number)
-  },
-  methods: {
   }
 }
 </script>

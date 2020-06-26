@@ -2,8 +2,8 @@
   <aside>
     <nav id="Category">
       <ul>
-        <li v-for="category in categories" :key="category.id">
-          <nuxt-link :to="'/parts/'+category.slug">
+        <li v-for="category in categories" :key="category.sort">
+          <nuxt-link :to="'/parts/'+category.id">
             {{ category.name }}
           </nuxt-link>
         </li>

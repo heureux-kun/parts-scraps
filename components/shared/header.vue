@@ -58,43 +58,12 @@ import InputField from '~/components/common/InputField.vue'
 
 const db = firebase.firestore()
 
-db.collection('item').get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    // console.log('item：' + doc.id)
-    // console.log('item：' + doc.data().category)
-  })
-})
-// db.collection('users').add({
-//   name: 'Harry Bosch',
-//   age: 16
-// })
-//   .then(function (docRef) {
-//     console.log('Document written with ID: ', docRef.id)
-//   })
-//   .catch(function (error) {
-//     console.error('Error adding document: ', error)
-//   })
-
 export default {
   components: {
     ButtonDefault,
     ModalContent,
     InputField
   },
-  // async fileChanged (e) {
-  //   const file = (e.target.files || e.dataTransfer.file)[0]
-  //   if (file) {
-  //     const fileName = uuid()
-  //     try {
-  //       const uploadTask = await this.$store.dispatch('../database/uploadFile', {
-  //         fileName,
-  //         file
-  //       })
-  //     } catch (error) {
-  //       console.error('file upload', error)
-  //     }
-  //   }
-  // }
   data () {
     return {
       modalShow: false,
@@ -113,6 +82,11 @@ export default {
   computed: {
     btnText () {
       return this.$store.state.loggedIn ? 'Sign Out' : 'Sign In'
+    }
+  },
+  created () {
+    if (!this.$store.items) {
+      this.$store.dispatch('items/fetchItems')
     }
   },
   methods: {

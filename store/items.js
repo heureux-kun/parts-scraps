@@ -2,22 +2,6 @@ import firebase from '~/plugins/firebase'
 const firestorage = firebase.storage()
 
 /* ======================
- state
-======================= */
-export const state = () => ({
-  items: [],
-  itemsCategory1: [],
-  itemsCategory2: [],
-  itemsCategory3: [],
-  itemsCategory4: [],
-  itemsCategory5: [],
-  itemsCategory6: [],
-  itemsCategory7: [],
-  itemsCategory8: [],
-  itemsCategory9: []
-})
-
-/* ======================
  getters
 ======================= */
 export const getters = {
@@ -53,8 +37,29 @@ export const getters = {
   },
   itemsCategory9: (state) => {
     return state.items.filter(item => item.categoryId === 9)
+  },
+  userItems: (state) => {
+    return state.items.filter(item => item.author === this.userUid)
   }
 }
+
+/* ======================
+ state
+======================= */
+export const state = () => ({
+  userUid: this.$store.state.user.uid,
+  items: [],
+  itemsCategory1: [],
+  itemsCategory2: [],
+  itemsCategory3: [],
+  itemsCategory4: [],
+  itemsCategory5: [],
+  itemsCategory6: [],
+  itemsCategory7: [],
+  itemsCategory8: [],
+  itemsCategory9: [],
+  userItems: []
+})
 
 /* ======================
  mutations

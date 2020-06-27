@@ -1,5 +1,8 @@
 <template>
   <div id="Content">
+    <h1 class="title">
+      {{ $store.state.categories[$route.params.id].name }}
+    </h1>
     <ul class="itemsWrapper">
       <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">
@@ -9,29 +12,20 @@
 </template>
 
 <script>
-import firebase from '~/plugins/firebase'
-// import Item from '~/components/Item.vue'
-
-// 画像の取得テスト
-// const url = firebase.storage().ref().child('images/images01.jpg').getDownloadURL()
-// console.log('url：' + url)
-
+const number = '03'
 export default {
   components: {
     // Item
   },
   data () {
     return {
-      categories: this.$store.state.categories,
       items: []
     }
   },
   computed: {
     getItmes () {
-      return this.$store.getters['items/items']
+      return this.$store.getters['items/itemsCategory' + this.$route.params.id]
     }
-  },
-  methods: {
   }
 }
 </script>

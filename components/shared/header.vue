@@ -140,10 +140,11 @@ export default {
           this.imageUrl = url
         })
 
-      // firestoreにfileNameとcategoryIdのアップロード ====================
+      // firestoreにfileNameとcategoryIdとauthorのアップロード ====================
       db.collection('item').add({
         fileName: this.fileName,
-        categoryId: this.addItemCategoryId
+        categoryId: this.addItemCategoryId,
+        author: this.$store.state.user.uid
       })
         .then(function (docRef) {
           // console.log(downloadUrl)

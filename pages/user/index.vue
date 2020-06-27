@@ -1,5 +1,7 @@
 <template>
   <div id="Content">
+    <h1>ユーザーのページ</h1>
+    {{ getItmes }}
     <ul class="itemsWrapper">
       <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">
@@ -10,11 +12,6 @@
 
 <script>
 import firebase from '~/plugins/firebase'
-// import Item from '~/components/Item.vue'
-
-// 画像の取得テスト
-// const url = firebase.storage().ref().child('images/images01.jpg').getDownloadURL()
-// console.log('url：' + url)
 
 export default {
   components: {
@@ -22,13 +19,11 @@ export default {
   },
   data () {
     return {
-      categories: this.$store.state.categories,
-      items: []
     }
   },
   computed: {
     getItmes () {
-      return this.$store.getters['items/items']
+      return this.$store.getters['items/userItems']
     }
   },
   methods: {

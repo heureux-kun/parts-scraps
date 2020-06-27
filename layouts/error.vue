@@ -6,9 +6,6 @@
     <h1 v-else>
       エラーが発生しました
     </h1>
-    <nuxt-link to="/">
-      ホーム
-    </nuxt-link>
   </div>
 </template>
 

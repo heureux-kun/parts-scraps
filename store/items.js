@@ -1,5 +1,6 @@
 import firebase from '~/plugins/firebase'
-const firestorage = firebase.storage()
+const firestore = firebase.firestore()
+const storage = firebase.storage()
 
 /* ======================
  getters
@@ -39,7 +40,7 @@ export const getters = {
     return state.items.filter(item => item.categoryId === 9)
   },
   userItems: (state) => {
-    return state.items.filter(item => item.author === this.userUid)
+    return state.items.filter(item => item.author === state.userUid)
   }
 }
 
@@ -47,7 +48,8 @@ export const getters = {
  state
 ======================= */
 export const state = () => ({
-  userUid: this.$store.state.user.uid,
+  // store/index.jsのstoreデータを取得する方法が分からない
+  userUid: '',
   items: [],
   itemsCategory1: [],
   itemsCategory2: [],
@@ -75,11 +77,10 @@ export const mutations = {
 ======================= */
 export const actions = {
   // itemの取得 ========================
-  fetchItems({ commit }) {
+  fetchItems({ commit }, user) {
     const bucketName = 'parts-scraps.appspot.com'
-    const db = firebase.firestore()
     const itemArray = []
-    db.collection('item')
+    firestore.collection('item')
       .get()
       // .then((snapshot) => {
       //   snapshot.forEach(doc => commit('setItems', doc.data()))
@@ -100,10 +101,10 @@ export const actions = {
   },
 
   // storageに画像のアップロード（vuex上ではなくvueファイルのmethodでできる？） ====================
-  uploadImage: (context, payload) => {
+  uploadItemImage: (context, payload) => {
     return new Promise((resolve, reject) => {
-      // firestoreにファイルをアップロード
-      const uploadTask = firestorage
+      // cloud storageに画像をアップロード
+      const uploadTask = storage
         .ref('images/parts/' + payload.fileName)
         .put(payload.file)
         .then((snapshot) => {

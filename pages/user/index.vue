@@ -1,7 +1,6 @@
 <template>
   <div id="Content">
     <h1>ユーザーのページ</h1>
-    {{ getItmes }}
     <ul class="itemsWrapper">
       <li v-for="item in getItmes" :key="item.id">
         <img v-bind:src="item.downloadUrl">

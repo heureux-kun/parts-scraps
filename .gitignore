@@ -91,3 +91,4 @@ sw.*
 
 # firebase
 .firebase/
+.vscode/snipsnap.code-snippets

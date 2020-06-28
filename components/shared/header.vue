@@ -36,7 +36,7 @@
           </modal-content>
         </li>
         <li v-if="$store.state.user">
-          <nuxt-link to="/users/">
+          <nuxt-link to="/user/">
             {{ $store.state.user.displayName }}
           </nuxt-link>
         </li>
@@ -86,7 +86,7 @@ export default {
   },
   created () {
     if (!this.$store.items) {
-      this.$store.dispatch('items/fetchItems')
+      this.$store.dispatch('items/fetchItems', this.$store.state.user)
     }
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
     setCategory (id) {
       this.addItemCategoryId = id
     },
-    // 画像を検出 （ファイル名を取得）====================s
+    // 画像を検出 （ファイル名を取得）====================
     detectFiles (e) {
       // imageUrlを空に
       this.imageUrl = ''
@@ -129,18 +129,21 @@ export default {
         this.fileName = uuid()
       }
     },
+    // itemの登録===========================
     itemRegister () {
-      // storageに画像のアップロード（items.jsのactionを呼び出し（intem.jsに入れなくてもできる？）） ====================
-      this.$store.dispatch('items/uploadImage', {
+      // storageに画像のアップロード（items.jsのactionを呼び出し（intem.jsに入れなくてもできる？））-----
+      this.$store.dispatch('items/uploadItemImage', {
         fileName: this.fileName,
         file: this.file
       })
         .then((url) => {
-        // アップロード完了処理（ローカルメンバに保存したり）
+        // 画像のフルバスが取得できる
           this.imageUrl = url
+          // 画像を取得（場所がおそらく別の方が良い。また、全部取得するのではなく、登録したパーツだけ追加で表示できるようにしたい）
+          this.$store.dispatch('items/fetchItems')
         })
 
-      // firestoreにfileNameとcategoryIdとauthorのアップロード ====================
+      // firestoreにfileNameとcategoryIdとauthorのアップロード ------------------------
       db.collection('item').add({
         fileName: this.fileName,
         categoryId: this.addItemCategoryId,

@@ -38,7 +38,7 @@ export const mutations = {
     state.loggedIn = payload
   }
 }
-
+//
 /* ======================
  actions
 ======================= */

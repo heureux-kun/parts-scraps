@@ -3,7 +3,7 @@
     <nav id="Category">
       <ul>
         <li v-for="category in categories" :key="category.sort">
-          <nuxt-link :to="'/parts/'+category.id">
+          <nuxt-link :to="'/user/parts/'+category.id">
             {{ category.name }}
           </nuxt-link>
         </li>
@@ -16,11 +16,7 @@
 export default {
   data () {
     return {
-    }
-  },
-  computed: {
-    categories () {
-      return this.$store.getters.categories
+      categories: this.$store.state.categories
     }
   }
 }

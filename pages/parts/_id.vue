@@ -4,15 +4,14 @@
       {{ $store.state.categories[$route.params.id].name }}
     </h1>
     <ul class="itemsWrapper">
-      <li v-for="item in getItmes" :key="item.id">
-        <img v-bind:src="item.downloadUrl">
+      <li v-for="item in getItems" :key="item.id">
+        <img :src="item.downloadUrl">
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-const number = '03'
 export default {
   components: {
     // Item
@@ -23,8 +22,9 @@ export default {
     }
   },
   computed: {
-    getItmes () {
-      return this.$store.getters['items/itemsCategory' + this.$route.params.id]
+    getItems () {
+      // return this.$store.getters['items/itemsCategory' + this.$route.params.id]
+      return this.$store.getters['items/itemsCategory(this.$route.params.id)']
     }
   }
 }

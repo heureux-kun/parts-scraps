@@ -2,8 +2,8 @@
   <div id="Content">
     <h1>ユーザーのページ</h1>
     <ul class="itemsWrapper">
-      <li v-for="item in getItmes" :key="item.id">
-        <img v-bind:src="item.downloadUrl">
+      <li v-for="item in getItems" :key="item.id">
+        <img :src="item.downloadUrl">
       </li>
     </ul>
   </div>
@@ -13,6 +13,7 @@
 import firebase from '~/plugins/firebase'
 
 export default {
+  layout: 'user',
   components: {
     // Item
   },
@@ -21,7 +22,7 @@ export default {
     }
   },
   computed: {
-    getItmes () {
+    getItems () {
       return this.$store.getters['items/userItems']
     }
   },
@@ -31,13 +32,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.itemsWrapper{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  li{
-    flex-basis: 300px;
-    margin-bottom: 20px;
-  }
-}
+
 </style>

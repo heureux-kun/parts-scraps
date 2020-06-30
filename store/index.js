@@ -1,12 +1,28 @@
 import firebase from '~/plugins/firebase'
 
 /* ======================
+ getters
+======================= */
+export const getters = {
+  user: (state) => {
+    return state.user
+  },
+  loggedIn: (state) => {
+    return state.loggedIn
+  },
+  categories: (state) => {
+    return state.categories
+  }
+}
+
+/* ======================
  state
 ======================= */
 export const state = () => ({
   user: null,
   loggedIn: false,
   categories: [
+    { id: 0, name: 'all', slug: 'all', sort: 0 },
     { id: 1, name: 'header', slug: 'header', sort: 1 },
     { id: 2, name: 'global navigation', slug: 'global-navigation', sort: 2 },
     { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list', sort: 3 },
@@ -18,13 +34,6 @@ export const state = () => ({
     { id: 9, name: 'others', slug: 'others', sort: 9 }
   ]
 })
-
-/* ======================
- getters
-======================= */
-export const getters = {
-
-}
 
 /* ======================
  mutations

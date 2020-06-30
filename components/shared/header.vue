@@ -35,9 +35,9 @@
             </div>
           </modal-content>
         </li>
-        <li v-if="$store.state.user">
-          <nuxt-link to="/user/">
-            {{ $store.state.user.displayName }}
+        <li v-if="user">
+          <nuxt-link to="/user/parts/0">
+            {{ user.displayName }}
           </nuxt-link>
         </li>
         <li>
@@ -75,19 +75,28 @@ export default {
       addItemCategoryId: '',
       file: '',
       fileName: '',
-      imageUrl: '',
-      categories: this.$store.state.categories
+      imageUrl: ''
     }
   },
   computed: {
     btnText () {
       return this.$store.state.loggedIn ? 'Sign Out' : 'Sign In'
+    },
+    categories () {
+      return this.$store.getters.categories
+    },
+    user () {
+      return this.$store.getters.user
     }
   },
   created () {
     if (!this.$store.items) {
-      this.$store.dispatch('items/fetchItems', this.$store.state.user)
+      this.$store.dispatch('items/fetchItems')
     }
+    // this.$store.dispatch('items/fetchItemsByUid', user)
+  },
+  mounted () {
+    this.$store.dispatch('items/fetchItemsByUid', user)
   },
   methods: {
     signIn () {
@@ -141,6 +150,7 @@ export default {
           this.imageUrl = url
           // 画像を取得（場所がおそらく別の方が良い。また、全部取得するのではなく、登録したパーツだけ追加で表示できるようにしたい）
           this.$store.dispatch('items/fetchItems')
+          this.$store.dispatch('items/fetchItemsByUid')
         })
 
       // firestoreにfileNameとcategoryIdとauthorのアップロード ------------------------

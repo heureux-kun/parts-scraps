@@ -1,8 +1,8 @@
 <template>
   <div id="Content">
     <ul class="itemsWrapper">
-      <li v-for="item in getItmes" :key="item.id">
-        <img v-bind:src="item.downloadUrl">
+      <li v-for="item in getItems" :key="item.id">
+        <img :src="item.downloadUrl">
       </li>
     </ul>
   </div>
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    getItmes () {
+    getItems () {
       return this.$store.getters['items/items']
     }
   },

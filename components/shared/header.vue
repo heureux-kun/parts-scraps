@@ -93,10 +93,7 @@ export default {
     if (!this.$store.items) {
       this.$store.dispatch('items/fetchItems')
     }
-    // this.$store.dispatch('items/fetchItemsByUid', user)
-  },
-  mounted () {
-    this.$store.dispatch('items/fetchItemsByUid', user)
+    // this.$store.dispatch('items/fetchItemsByUid', this.user)
   },
   methods: {
     signIn () {
@@ -150,7 +147,7 @@ export default {
           this.imageUrl = url
           // 画像を取得（場所がおそらく別の方が良い。また、全部取得するのではなく、登録したパーツだけ追加で表示できるようにしたい）
           this.$store.dispatch('items/fetchItems')
-          this.$store.dispatch('items/fetchItemsByUid')
+          // this.$store.dispatch('items/fetchItemsByUid')
         })
 
       // firestoreにfileNameとcategoryIdとauthorのアップロード ------------------------

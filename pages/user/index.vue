@@ -2,7 +2,7 @@
   <div id="Content">
     <h1>ユーザーのページ</h1>
     <ul class="itemsWrapper">
-      <li v-for="item in getItems" :key="item.id">
+      <li v-for="item in ItemsByUid" :key="item.id">
         <img :src="item.downloadUrl">
       </li>
     </ul>
@@ -22,8 +22,14 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.getters.user
+    },
     getItems () {
-      return this.$store.getters['items/userItems']
+      return this.$store.getters['items/items']
+    },
+    ItemsByUid () {
+      return this.getItems.filter(item => item.author === this.user.uid)
     }
   },
   methods: {

@@ -1,8 +1,6 @@
 <template>
   <div id="Content">
-    <h1 class="title">
-      {{ $store.state.categories[$route.params.id].name }}
-    </h1>
+    <h1>ユーザーのページ</h1>
     <ul class="itemsWrapper">
       <li v-for="item in getItems" :key="item.id">
         <img :src="item.downloadUrl">
@@ -12,20 +10,23 @@
 </template>
 
 <script>
+import firebase from '~/plugins/firebase'
+
 export default {
+  layout: 'user',
   components: {
     // Item
   },
   data () {
     return {
-      items: []
     }
   },
   computed: {
     getItems () {
-      // return this.$store.getters['items/itemsCategory' + this.$route.params.id]
-      return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+      return this.$store.getters['items/items']
     }
+  },
+  methods: {
   }
 }
 </script>

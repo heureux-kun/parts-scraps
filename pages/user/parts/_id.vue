@@ -4,7 +4,7 @@
       {{ $store.state.categories[$route.params.id].name }}
     </h1>
     <ul class="itemsWrapper">
-      <li v-for="item in getItems" :key="item.id">
+      <li v-for="item in ItemsByUid" :key="item.id">
         <img :src="item.downloadUrl">
       </li>
     </ul>
@@ -19,25 +19,24 @@ export default {
   },
   data () {
     return {
-      items: []
+      items: [],
+      paramsId: this.$route.params.id
     }
   },
   computed: {
+    user () {
+      return this.$store.getters.user
+    },
     getItems () {
-      return this.$store.getters['items/itemsCategory(this.$route.params.id)']
+      return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+    },
+    ItemsByUid () {
+      return this.getItems.filter(item => item.author === this.user.uid)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.itemsWrapper{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  li{
-    flex-basis: 300px;
-    margin-bottom: 20px;
-  }
-}
+
 </style>

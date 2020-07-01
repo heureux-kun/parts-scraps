@@ -37,13 +37,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.itemsWrapper{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  li{
-    flex-basis: 300px;
-    margin-bottom: 20px;
-  }
-}
+
 </style>

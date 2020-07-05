@@ -1,16 +1,13 @@
 <template>
-  <ul class="itemsWrapper">
-    <li>
-      <a href="#">
-        <img :src="downloadUrl">
-        <span>{{ categoryId }}</span>
-      </a>
-      <p class="operation">
-        <a href="#" class="addButton">+ add</a>
-        <a href="#" class="editButton">edit</a>
-      </p>
-    </li>
-  </ul>
+  <li>
+    <a href="#">
+      <img :src="downloadUrl">
+    </a>
+    <p class="operation">
+      <a href="#" class="addButton">+ add</a>
+      <a href="#" class="editButton">edit</a>
+    </p>
+  </li>
 </template>
 
 <script>

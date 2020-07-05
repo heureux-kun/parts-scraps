@@ -4,16 +4,20 @@
 
 <template>
   <div id="Content">
-    <h1>ユーザーのページ</h1>
+    <h1 class="title">
+      all
+    </h1>
     <transition>
-      <magic-grid>
-        <item
-          v-for="item in itemsByUid"
-          :key="item.id"
-          :downloadUrl="item.downloadUrl"
-          :categoryId="item.categoryId"
-        />
-      </magic-grid>
+      <ul class="itemsWrapper">
+        <magic-grid>
+          <item
+            v-for="item in itemsByUid"
+            :key="item.id"
+            :downloadUrl="item.downloadUrl"
+            :categoryId="item.categoryId"
+          />
+        </magic-grid>
+      </ul>
     </transition>
   </div>
 </template>

@@ -268,16 +268,21 @@ header{
 *
 * =================================================================== 
 */
-.itemsWrapper{
-  display: flex;
-  // justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  li{
-    flex-basis: 300px;
-    margin-bottom: 20px;
-  }
+// .itemsWrapper{
+//   display: flex;
+//   // justify-content: center;
+//   align-items: center;
+//   flex-wrap: wrap;
+//   justify-content: space-between;
+//   li{
+//     flex-basis: 300px;
+//     margin-bottom: 20px;
+//   }
+// }
+
+.title{
+  font-size: 100%;
+  margin-bottom: 20px;
 }
 
 .operationButton a{

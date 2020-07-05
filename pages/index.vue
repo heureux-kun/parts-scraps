@@ -5,14 +5,16 @@ index.vue
 <template>
   <div id="Content">
     <transition>
-      <magic-grid>
-        <item
-          v-for="item in getItems"
-          :key="item.id"
-          :downloadUrl="item.downloadUrl"
-          :categoryId="item.categoryId"
-        />
-      </magic-grid>
+      <ul class="itemsWrapper">
+        <magic-grid>
+          <item
+            v-for="item in getItems"
+            :key="item.id"
+            :downloadUrl="item.downloadUrl"
+            :categoryId="item.categoryId"
+          />
+        </magic-grid>
+      </ul>
     </transition>
   </div>
 </template>

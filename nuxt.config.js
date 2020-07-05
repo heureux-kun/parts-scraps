@@ -13,29 +13,37 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { href: 'https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap', rel: 'stylesheet' }
     ]
   },
   /*
   ** Customize the progress-bar color
   */
   loading: {
-    color: 'blue',
+    color: '#1BD3A1',
     height: '5px'
   },
   /*
   ** Global CSS
   */
   css: [
-    '~/assets/sass/app.scss',
+    '~/assets/scss/app.scss',
     'modern-css-reset'
   ],
+  styleResources: {
+    scss: [
+      '@/assets/scss/_variable.scss',
+      '@/assets/scss/_mixin.scss'
+    ]
+  },
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     'plugins/firebase',
-    'plugins/userAuthStateChanged'
+    'plugins/userAuthStateChanged',
+    'plugins/magic-grid'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -49,14 +57,20 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/axios'
+    '@nuxtjs/style-resources',
+    'nuxt-fontawesome'
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-    baseURL: 'https://jsonplaceholder.typicode.com/'
+  fontawesome: {
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      },
+      {
+        set: '@fortawesome/free-regular-svg-icons',
+        icons: ['far']
+      }
+    ]
   },
   env: {
     FIRE_API_KEY: process.env.FIRE_API_KEY,

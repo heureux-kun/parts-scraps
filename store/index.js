@@ -22,7 +22,6 @@ export const state = () => ({
   user: null,
   loggedIn: false,
   categories: [
-    { id: 0, name: 'all', slug: 'all', sort: 0 },
     { id: 1, name: 'header', slug: 'header', sort: 1 },
     { id: 2, name: 'global navigation', slug: 'global-navigation', sort: 2 },
     { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list', sort: 3 },

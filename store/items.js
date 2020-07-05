@@ -11,6 +11,7 @@ export const getters = {
     return state.items
   },
   itemsByCategory: (state, categoryId) => {
+    // console.log('categoryId：' + categoryId)
     return state.items.filter(item => item.categoryId === categoryId)
   }
 }

@@ -14,18 +14,27 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-regular-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/vue-fontawesome": "^0.1.10",
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "firebase": "^7.7.0",
+    "firebase": "^7.15.5",
     "modern-css-reset": "^1.0.4",
     "nuxt": "^2.0.0",
-    "vue": "^2.6.11"
+    "nuxt-fontawesome": "^0.4.0",
+    "vue": "^2.6.11",
+    "vue-magic-grid": "0.0.4",
+    "vue-masonry": "^0.11.8"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/fontawesome": "^1.1.2",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@storybook/addon-actions": "^5.3.9",
     "@storybook/addon-links": "^5.3.9",
     "@storybook/addons": "^5.3.9",
@@ -36,7 +45,7 @@
     "css-loader": "^3.4.2",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "storybook-addon-vue-info": "^1.4.1",
     "style-loader": "^1.1.3",

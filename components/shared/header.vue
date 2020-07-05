@@ -6,22 +6,50 @@
       </nuxt-link>
     </h1>
     <nav>
-      <ul>
-        <li v-if="$store.state.loggedIn">
-          <button-default :text="addItemBtnText" @from-child="addItem" />
+      <div class="navButtons">
+        <div v-if="!user">
+          <button @click="signInButtonClick" class="signInButton">
+            Sign In
+          </button>
+        </div>
+        <div v-if="user" class="userBtn">
+          <a href="/user/parts/">
+            {{ user.displayName }}
+          </a>
+          <ul>
+            <li>
+              <nuxt-link :to="'/user/setting/'">
+                setting
+              </nuxt-link>
+            </li>
+            <button @click="signInButtonClick" class="signOutButton">
+              Sign Out
+            </button>
+          </ul>
+        </div>
+      </div>
+      <div v-if="$store.state.loggedIn" class="addItemBtn">
+        <button-default :text="addItemBtnText" @from-child="addItem" class="action" />
+        <transition>
           <modal-content v-if="modalShow" @from-child="modalClose">
             <p class="elementTitle">
               Add Item
             </p>
             <div class="imageDragArea">
-              <p>Please drag and drop image.</p>
-              or select
-              <input @change="detectFiles" type="file">
+              <p>
+                Please drag and drop image.<br>
+                or select
+              </p>
+              <label>
+                Choose file
+                <input id="FileUploadButton" @change="detectFiles" type="file">
+              </label>
+              <div id="FileName" class="fileName" />
             </div>
 
             <ul class="categoryButtons">
               <li v-for="category in categories" :key="category.id">
-                <a @click="setCategory(category.id)" href="#">
+                <a @click="setCategory(category.id);selectedButton=category.id" :class="[ selectedButton === category.id ? 'selected' : '' ]" href="#">
                   {{ category.name }}
                 </a>
               </li>
@@ -34,16 +62,8 @@
               <button-default :text="cancelText" @from-child="modalClose" />
             </div>
           </modal-content>
-        </li>
-        <li v-if="user">
-          <nuxt-link to="/user/parts/0">
-            {{ user.displayName }}
-          </nuxt-link>
-        </li>
-        <li>
-          <button-default :text="btnText" @from-child="signInButtonClick" />
-        </li>
-      </ul>
+        </transition>
+      </div>
     </nav>
   </header>
 </template>
@@ -67,6 +87,7 @@ export default {
   data () {
     return {
       modalShow: false,
+      // modalShow: true,
       addItemBtnText: '+ Add Item',
       orSelectBtnText: 'or select',
       submitText: 'Submit',
@@ -75,7 +96,8 @@ export default {
       addItemCategoryId: '',
       file: '',
       fileName: '',
-      imageUrl: ''
+      imageUrl: '',
+      selectedButton: ''
     }
   },
   computed: {
@@ -88,6 +110,14 @@ export default {
     user () {
       return this.$store.getters.user
     }
+  },
+  mounted () {
+    // ページコンポーネントのマウントプロセス中に、$loading プロパティにすぐにアクセスできない場合があるので、これを回避するためにローダーを起動
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
   },
   created () {
     if (!this.$store.items) {
@@ -134,6 +164,13 @@ export default {
       if (this.file) {
         this.fileName = uuid()
       }
+      // ファイル名を取得して画面に出す
+      const fileList = document.getElementById('FileUploadButton').files
+      let list = ''
+      for (let i = 0; i < fileList.length; i++) {
+        list += fileList[i].name + '<br>'
+      }
+      document.getElementById('FileName').innerHTML = list
     },
     // itemの登録===========================
     itemRegister () {
@@ -170,6 +207,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.navButtons{
+  a,
+  button {
+    color: $subColor;
+  }
+  .signInButton{
+    border-color: $subColor;
+    color: $subColor;
+    padding: 4px 12px;
+    border-radius: 3px;
+    text-decoration: none;
+    &:hover{
+      cursor: pointer;
+      background-color: $subColor;
+      color: #FFF;
+    }
+  }
+  .signOutButton{
+    border: none;
+    font-size: 80%;
+    cursor: pointer;
+  }
+}
+
 .buttons{
   display: flex;
   justify-content: center;
@@ -187,5 +248,50 @@ export default {
   align-items: center;
   flex-direction: column;
   margin-bottom: 10px;
+  border-radius: 5px;
+  label{
+    border: 1px solid $subColor;
+    background-color:#FFF;
+    border-radius: 3px;
+    color: $subColor;
+    padding: 5px 10px;
+    &:hover{
+      cursor: pointer;
+      background-color: $subColor;
+      color: #FFF;
+    }
+    input{
+      display: none;
+    }
+  }
+  .fileName{
+    font-size: 80%;
+    padding-top: 5px;
+  }
+}
+.categoryButtons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  li{
+    margin-right: 5px;
+  }
+  a{
+    display: inline-block;
+    border: 1px solid $keyColor;
+    font-size: 85%;
+    height: 2.4em;
+    line-height: 2.2em;
+    border-radius: 2.4em;
+    padding: 0 10px;
+    color: $keyColor;
+    text-decoration: none;
+    margin-bottom: 5px;
+    &:hover,
+    &.selected{
+      background-color: $keyColor;
+      color: #FFF;
+    }
+  }
 }
 </style>

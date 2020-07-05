@@ -5,7 +5,7 @@
 <template>
   <div id="Content">
     <h1 class="title">
-      {{ $store.state.categories[$route.params.id].name }}
+      {{ this.getCategoryNameByparamsId }}
     </h1>
     <transition>
       <magic-grid>
@@ -21,24 +21,27 @@
 </template>
 
 <script>
-import firebase from '~/plugins/firebase'
 import Item from '~/components/Item.vue'
 
 export default {
   components: {
-    // Item
+    Item
   },
   data () {
     return {
-      items: []
+      items: [],
+      categoryId: parseInt(this.$route.params.id) - 1
     }
   },
   computed: {
+    getCategoryNameByparamsId () {
+      return this.$store.state.categories[this.categoryId].name
+    },
     getItems () {
-      // return this.$store.getters['items/itemsCategory' + this.$route.params.id]
       // console.log('route：' + this.$route.params.id)
-      // return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
-      return this.$route.params.id && this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+      // return this.$route.params.id && this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+      // return this.$store.getters['items/itemsByCategory']
+      return this.$store.getters['items/itemsByCategory' + this.$route.params.id]
     }
   }
 }

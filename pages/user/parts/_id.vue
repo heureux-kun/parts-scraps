@@ -5,7 +5,7 @@
 <template>
   <div id="Content">
     <h1 class="title">
-      {{ $store.state.categories[$route.params.id].name }}
+      {{ this.getCategoryNameByparamsId }}
     </h1>
     <transition>
       <magic-grid>
@@ -21,24 +21,30 @@
 </template>
 
 <script>
+import Item from '~/components/Item.vue'
+
 export default {
   layout: 'user',
   components: {
-    // Item
+    Item
   },
   data () {
     return {
       items: [],
-      paramsId: this.$route.params.id
+      categoryId: parseInt(this.$route.params.id) - 1
     }
   },
   computed: {
+    getCategoryNameByparamsId () {
+      return this.$store.state.categories[this.categoryId].name
+    },
     user () {
       return this.$store.getters.user
     },
     getItems () {
       // return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
-      return this.$route.params.id && this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+      // return this.$route.params.id && this.$store.getters['items/itemsByCategory']
+      return this.$store.getters['items/itemsByCategory' + this.$route.params.id]
     },
     itemsByUid () {
       return this.getItems.filter(item => item.author === this.user.uid)

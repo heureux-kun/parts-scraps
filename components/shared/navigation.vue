@@ -3,7 +3,7 @@
     <nav id="Category">
       <ul>
         <li>
-          <nuxt-link :to="/parts/">
+          <nuxt-link :to="'/'">
             all
           </nuxt-link>
         </li>

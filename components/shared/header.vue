@@ -123,6 +123,7 @@ export default {
     if (!this.$store.items) {
       this.$store.dispatch('items/fetchItems')
     }
+    this.$store.dispatch('items/getCategoryId', this.$route.params.id)
     // this.$store.dispatch('items/fetchItemsByUid', this.user)
   },
   methods: {

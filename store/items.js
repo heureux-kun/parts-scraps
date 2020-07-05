@@ -10,9 +10,39 @@ export const getters = {
   items: (state) => {
     return state.items
   },
+  categoryId: () => {
+    return state.setCategoryId
+  },
   itemsByCategory: (state, categoryId) => {
-    // console.log('categoryId：' + categoryId)
+    console.log('categoryId：' + categoryId)
     return state.items.filter(item => item.categoryId === categoryId)
+  },
+  itemsByCategory1: (state) => {
+    return state.items.filter(item => item.categoryId === 1)
+  },
+  itemsByCategory2: (state) => {
+    return state.items.filter(item => item.categoryId === 2)
+  },
+  itemsByCategory3: (state) => {
+    return state.items.filter(item => item.categoryId === 3)
+  },
+  itemsByCategory4: (state) => {
+    return state.items.filter(item => item.categoryId === 4)
+  },
+  itemsByCategory5: (state) => {
+    return state.items.filter(item => item.categoryId === 5)
+  },
+  itemsByCategory6: (state) => {
+    return state.items.filter(item => item.categoryId === 6)
+  },
+  itemsByCategory7: (state) => {
+    return state.items.filter(item => item.categoryId === 7)
+  },
+  itemsByCategory8: (state) => {
+    return state.items.filter(item => item.categoryId === 8)
+  },
+  itemsByCategory9: (state) => {
+    return state.items.filter(item => item.categoryId === 9)
   }
 }
 
@@ -20,7 +50,8 @@ export const getters = {
  state
 ======================= */
 export const state = () => ({
-  items: []
+  items: [],
+  categoryId: ''
 })
 
 /* ======================
@@ -29,6 +60,10 @@ export const state = () => ({
 export const mutations = {
   setItems(state, payload) {
     state.items = payload
+  },
+  setCategoryId(state, payload) {
+    // console.log('payload：' + payload)
+    state.categoryId = payload
   }
 }
 
@@ -36,6 +71,10 @@ export const mutations = {
  actions
 ======================= */
 export const actions = {
+  // categoryの取得
+  getCategoryId({ commit }, paramsId) {
+    commit('setCategoryId', paramsId)
+  },
   // itemの取得 ========================
   fetchItems({ commit }) {
     const bucketName = 'parts-scraps.appspot.com'

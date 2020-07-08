@@ -8,7 +8,7 @@
       {{ this.getCategoryNameByparamsId }}
     </h1>
     <transition>
-      <ul class="itemsWrapper">
+      <ul v-show="showItems" class="itemsWrapper">
         <magic-grid>
           <item
             v-for="item in getItems"
@@ -39,11 +39,17 @@ export default {
     getCategoryNameByparamsId () {
       return this.$store.state.categories[this.categoryId].name
     },
+    showItems () {
+      return this.$store.getters['items/showItems']
+    },
     getItems () {
       // console.log('route：' + this.$route.params.id)
       // return this.$route.params.id && this.$store.getters['items/itemsByCategory'](this.$route.params.id)
       // return this.$store.getters['items/itemsByCategory']
       return this.$store.getters['items/itemsByCategory' + this.$route.params.id]
+      // if (this.$route.params.id) {
+      //   return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
+      // }
     }
   }
 }

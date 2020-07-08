@@ -13,6 +13,9 @@ export const getters = {
   categoryId: () => {
     return state.setCategoryId
   },
+  showItems: () => {
+    return state.showItems
+  },
   itemsByCategory: (state, categoryId) => {
     console.log('categoryId：' + categoryId)
     return state.items.filter(item => item.categoryId === categoryId)
@@ -51,7 +54,8 @@ export const getters = {
 ======================= */
 export const state = () => ({
   items: [],
-  categoryId: ''
+  categoryId: '',
+  showItems: false
 })
 
 /* ======================
@@ -64,6 +68,9 @@ export const mutations = {
   setCategoryId(state, payload) {
     // console.log('payload：' + payload)
     state.categoryId = payload
+  },
+  showItems(state) {
+    state.showItems = true
   }
 }
 
@@ -96,6 +103,10 @@ export const actions = {
         })
         commit('setItems', itemArray)
         console.log('fetchItemsでデータを取得しました')
+      })
+      .finally(() => {
+        // ローディングを非常時にする
+        commit('showItems', true)
       })
   },
 

@@ -5,10 +5,10 @@ index.vue
 <template>
   <div id="Content">
     <transition>
-      <ul class="itemsWrapper">
+      <ul v-show="itemsShow" class="itemsWrapper">
         <magic-grid>
           <item
-            v-for="item in getItems"
+            v-for="item in items"
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
@@ -33,12 +33,15 @@ export default {
   },
   data () {
     return {
-      items: []
+
     }
   },
   computed: {
-    getItems () {
+    items () {
       return this.$store.getters['items/items']
+    },
+    itemsShow () {
+      return !!this.items || false
     }
   },
   methods: {

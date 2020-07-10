@@ -32,7 +32,6 @@ export default {
   },
   data () {
     return {
-      items: [],
       categoryId: parseInt(this.$route.params.id) - 1
     }
   },
@@ -43,13 +42,13 @@ export default {
     user () {
       return this.$store.getters.user
     },
-    getItems () {
+    items () {
       // return this.$store.getters['items/itemsByCategory'](this.$route.params.id)
       // return this.$route.params.id && this.$store.getters['items/itemsByCategory']
       return this.$store.getters['items/itemsByCategory' + this.$route.params.id]
     },
     itemsByUid () {
-      return this.getItems.filter(item => item.author === this.user.uid)
+      return this.items.filter(item => item.author === this.user.uid)
     }
   }
 }

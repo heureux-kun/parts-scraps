@@ -5,7 +5,7 @@ index.vue
 <template>
   <div id="Content">
     <transition>
-      <ul v-show="itemsShow" class="itemsWrapper">
+      <ul v-if="itemsShow" class="itemsWrapper">
         <magic-grid>
           <item
             v-for="item in items"

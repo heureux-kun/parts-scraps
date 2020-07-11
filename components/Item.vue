@@ -2,8 +2,9 @@
   <li>
     <a href="#">
       <img :src="downloadUrl">
+      <!-- {{ categoryId }} -->
     </a>
-    <p class="operation">
+    <p v-if="operationShow" class="operation">
       <a href="#" class="addButton">+ add</a>
       <a href="#" class="editButton">edit</a>
     </p>
@@ -20,6 +21,10 @@ export default {
     categoryId: {
       type: Number,
       default: 0
+    },
+    operationShow: {
+      type: Boolean,
+      default: false
     }
   }
 }

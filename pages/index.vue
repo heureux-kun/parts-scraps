@@ -12,6 +12,7 @@ index.vue
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
+            :operationShow="show"
           />
         </magic-grid>
       </ul>

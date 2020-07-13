@@ -4,9 +4,13 @@
       <img :src="downloadUrl">
       <!-- {{ categoryId }} -->
     </a>
-    <p v-if="operationShow" class="operation">
-      <a href="#" class="addButton">+ add</a>
-      <a href="#" class="editButton">edit</a>
+    <p class="operation">
+      <button @click="handleClick" :class="{displayBlock:addButtonShow}" class="addButton">
+        + add
+      </button>
+      <button :class="{displayBlock:editButtonShow}" class="editButton">
+        edit
+      </button>
     </p>
   </li>
 </template>
@@ -18,13 +22,22 @@ export default {
       type: String,
       default: ''
     },
-    categoryId: {
-      type: Number,
-      default: 0
-    },
-    operationShow: {
+    // categoryId: {
+    //   type: Number,
+    //   default: 0
+    // },
+    addButtonShow: {
       type: Boolean,
       default: false
+    },
+    editButtonShow: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    handleClick () {
+      this.$emit('childs-event')
     }
   }
 }

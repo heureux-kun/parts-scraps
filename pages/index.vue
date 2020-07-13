@@ -12,7 +12,9 @@ index.vue
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
-            :operationShow="show"
+            :addButtonShow="addButtonShow"
+            :editButtonShow="editButtonShow"
+            v-on:childs-event="handleClickParent"
           />
         </magic-grid>
       </ul>
@@ -34,7 +36,8 @@ export default {
   },
   data () {
     return {
-
+      addButtonShow: true,
+      editButtonShow: false
     }
   },
   computed: {
@@ -46,6 +49,10 @@ export default {
     }
   },
   methods: {
+    handleClickParent () {
+      alert('addクリックされました')
+      console.log('addくりっく')
+    }
   }
 }
 </script>

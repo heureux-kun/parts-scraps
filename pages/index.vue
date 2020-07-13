@@ -14,7 +14,7 @@ index.vue
             :categoryId="item.categoryId"
             :addButtonShow="addButtonShow"
             :editButtonShow="editButtonShow"
-            v-on:childs-event="handleClickParent"
+            v-on:add-click-event="addItem(item)"
           />
         </magic-grid>
       </ul>
@@ -25,6 +25,8 @@ index.vue
 <script>
 import firebase from '~/plugins/firebase'
 import Item from '~/components/Item.vue'
+
+const db = firebase.firestore()
 
 // 画像の取得テスト
 // const url = firebase.storage().ref().child('images/images01.jpg').getDownloadURL()
@@ -49,9 +51,20 @@ export default {
     }
   },
   methods: {
-    handleClickParent () {
-      alert('addクリックされました')
-      console.log('addくりっく')
+    // itemの登録===========================
+    addItem (item) {
+      db.collection('item').add({
+        fileName: item.fileName,
+        categoryId: item.categoryId,
+        author: this.$store.state.user.uid
+      })
+        .then(function (docRef) {
+          // console.log(downloadUrl)
+          alert('自分のscrapsに保存しました')
+        })
+        .catch(function (error) {
+          // console.error('Error adding document: ', error)
+        })
     }
   }
 }

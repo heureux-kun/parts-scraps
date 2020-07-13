@@ -178,9 +178,14 @@ img{
   font-size: 110%;
   font-weight: bold;
 }
+.operation{
+  button{
+    display: none;
+  }
+}
 
 .displayBlock{
-  display: block;
+  display: block !important;
 }
 
 /*

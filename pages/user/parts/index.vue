@@ -15,6 +15,9 @@
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
+            :addButtonShow="addButtonShow"
+            :editButtonShow="editButtonShow"
+            v-on:edit-click-event="editItem(item)"
           />
         </magic-grid>
       </ul>
@@ -27,6 +30,8 @@ import uuid from 'uuid'
 import firebase from '~/plugins/firebase'
 import Item from '~/components/Item.vue'
 
+const db = firebase.firestore()
+
 export default {
   layout: 'user',
   components: {
@@ -34,6 +39,8 @@ export default {
   },
   data () {
     return {
+      addButtonShow: false,
+      editButtonShow: true
     }
   },
   computed: {
@@ -48,6 +55,9 @@ export default {
     }
   },
   methods: {
+    editItem (item) {
+      // ここにeditの内容を入れる
+    }
   }
 }
 </script>

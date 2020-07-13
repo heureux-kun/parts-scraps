@@ -5,10 +5,10 @@
       <!-- {{ categoryId }} -->
     </a>
     <p class="operation">
-      <button @click="handleClick" :class="{displayBlock:addButtonShow}" class="addButton">
+      <button @click="addEvent" :class="{displayBlock:addButtonShow}">
         + add
       </button>
-      <button :class="{displayBlock:editButtonShow}" class="editButton">
+      <button @click="editEvent" :class="{displayBlock:editButtonShow}">
         edit
       </button>
     </p>
@@ -36,8 +36,11 @@ export default {
     }
   },
   methods: {
-    handleClick () {
-      this.$emit('childs-event')
+    addEvent () {
+      this.$emit('add-click-event')
+    },
+    editEvent () {
+      this.$emit('edit-click-event')
     }
   }
 }

@@ -12,8 +12,8 @@ index.vue
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
-            :addButtonShow="addButtonShow"
-            :editButtonShow="editButtonShow"
+            :showAddButton="showAddButton"
+            :showEditButton="showEditButton"
             v-on:add-click-event="addItem(item)"
           />
         </magic-grid>
@@ -38,8 +38,8 @@ export default {
   },
   data () {
     return {
-      addButtonShow: true,
-      editButtonShow: false
+      showAddButton: true,
+      showEditButton: false
     }
   },
   computed: {

@@ -5,10 +5,10 @@
       <!-- {{ categoryId }} -->
     </a>
     <p class="operation">
-      <button @click="addEvent" :class="{displayBlock:addButtonShow}">
+      <button @click="addEvent" :class="{displayBlock:showAddButton}">
         + add
       </button>
-      <button @click="editEvent" :class="{displayBlock:editButtonShow}">
+      <button @click="editEvent" :class="{displayBlock:showEditButton}">
         edit
       </button>
     </p>
@@ -26,11 +26,11 @@ export default {
     //   type: Number,
     //   default: 0
     // },
-    addButtonShow: {
+    showAddButton: {
       type: Boolean,
       default: false
     },
-    editButtonShow: {
+    showEditButton: {
       type: Boolean,
       default: false
     }

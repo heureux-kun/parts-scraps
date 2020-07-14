@@ -15,8 +15,8 @@
             :key="item.id"
             :downloadUrl="item.downloadUrl"
             :categoryId="item.categoryId"
-            :addButtonShow="addButtonShow"
-            :editButtonShow="editButtonShow"
+            :showAddButton="showAddButton"
+            :showEditButton="showEditButton"
             v-on:edit-click-event="editItem(item)"
           />
         </magic-grid>
@@ -39,8 +39,8 @@ export default {
   },
   data () {
     return {
-      addButtonShow: false,
-      editButtonShow: true
+      showAddButton: false,
+      showEditButton: true
     }
   },
   computed: {

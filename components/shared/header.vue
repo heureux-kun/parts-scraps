@@ -6,34 +6,64 @@
       </nuxt-link>
     </h1>
     <nav>
-      <ul>
-        <li v-if="$store.state.loggedIn">
-          <button-default :text="addItemBtnText" @from-child="addItem" />
+      <div class="navButtons">
+        <div v-if="!user">
+          <button @click="signInButtonClick" class="signInButton">
+            Sign In
+          </button>
+        </div>
+        <div v-if="user" class="userBtn">
+          <a href="/user/parts/">
+            {{ user.displayName }}
+          </a>
+          <ul>
+            <li>
+              <nuxt-link :to="'/user/setting/'">
+                setting
+              </nuxt-link>
+            </li>
+            <button @click="signInButtonClick" class="signOutButton">
+              Sign Out
+            </button>
+          </ul>
+        </div>
+      </div>
+      <div v-if="$store.state.loggedIn" class="addItemBtn">
+        <button-default :text="addItemBtnText" @from-child="addItem" class="action" />
+        <transition>
           <modal-content v-if="modalShow" @from-child="modalClose">
             <p class="elementTitle">
               Add Item
             </p>
             <div class="imageDragArea">
-              <p>Please drag and drop image.</p>
-              or select
-              <input @change="fileChanged($event)" type="file">
+              <p>
+                Please drag and drop image.<br>
+                or select
+              </p>
+              <label>
+                Choose file
+                <input id="FileUploadButton" @change="detectFiles" type="file">
+              </label>
+              <div id="FileName" class="fileName" />
             </div>
-            <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" />
+
+            <ul class="categoryButtons">
+              <li v-for="category in categories" :key="category.id">
+                <a @click="setCategory(category.id);selectedButton=category.id" :class="[ selectedButton === category.id ? 'selected' : '' ]" href="#">
+                  {{ category.name }}
+                </a>
+              </li>
+            </ul>
+
+            <!-- <input-field v-model="categoryInputContent" placeholder="please enter category..." class="withFull" /> -->
+
             <div class="buttons">
               <button-default :text="submitText" @from-child="itemRegister(); modalClose();" />
               <button-default :text="cancelText" @from-child="modalClose" />
             </div>
           </modal-content>
-        </li>
-        <li v-if="$store.state.user">
-          <nuxt-link to="/users/">
-            {{ $store.state.user.displayName }}
-          </nuxt-link>
-        </li>
-        <li>
-          <button-default :text="btnText" @from-child="signInButtonClick" />
-        </li>
-      </ul>
+        </transition>
+      </div>
     </nav>
   </header>
 </template>
@@ -48,57 +78,53 @@ import InputField from '~/components/common/InputField.vue'
 
 const db = firebase.firestore()
 
-db.collection('item').get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    // console.log('item：' + doc.id)
-    // console.log('item：' + doc.data().category)
-  })
-})
-// db.collection('users').add({
-//   name: 'Harry Bosch',
-//   age: 16
-// })
-//   .then(function (docRef) {
-//     console.log('Document written with ID: ', docRef.id)
-//   })
-//   .catch(function (error) {
-//     console.error('Error adding document: ', error)
-//   })
-
 export default {
   components: {
     ButtonDefault,
     ModalContent,
     InputField
   },
-  async fileChanged (e) {
-    const file = (e.target.files || e.dataTransfer.file)[0]
-    if (file) {
-      const fileName = uuid()
-      try {
-        const uploadTask = await this.$store.dispatch('../database/uploadFile', {
-          fileName,
-          file
-        })
-      } catch (error) {
-        console.error('file upload', error)
-      }
-    }
-  },
   data () {
     return {
       modalShow: false,
+      // modalShow: true,
       addItemBtnText: '+ Add Item',
       orSelectBtnText: 'or select',
       submitText: 'Submit',
       cancelText: 'Cancel',
-      categoryInputContent: ''
+      // categoryInputContent: '',
+      addItemCategoryId: '',
+      file: '',
+      fileName: '',
+      imageUrl: '',
+      selectedButton: ''
     }
   },
   computed: {
     btnText () {
       return this.$store.state.loggedIn ? 'Sign Out' : 'Sign In'
+    },
+    categories () {
+      return this.$store.getters.categories
+    },
+    user () {
+      return this.$store.getters.user
     }
+  },
+  mounted () {
+    // ページコンポーネントのマウントプロセス中に、$loading プロパティにすぐにアクセスできない場合があるので、これを回避するためにローダーを起動
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
+  },
+  created () {
+    if (!this.$store.items) {
+      this.$store.dispatch('items/fetchItems')
+    }
+    this.$store.dispatch('items/getCategoryId', this.$route.params.id)
+    // this.$store.dispatch('items/fetchItemsByUid', this.user)
   },
   methods: {
     signIn () {
@@ -126,23 +152,86 @@ export default {
     modalClose () {
       this.modalShow = false
     },
+    setCategory (id) {
+      this.addItemCategoryId = id
+    },
+    // 画像を検出 （ファイル名を取得）====================
+    detectFiles (e) {
+      // imageUrlを空に
+      this.imageUrl = ''
+
+      // アップロード対象は1件のみとする
+      this.file = (e.target.files || e.dataTransfer.files)[0]
+      if (this.file) {
+        this.fileName = uuid()
+      }
+      // ファイル名を取得して画面に出す
+      const fileList = document.getElementById('FileUploadButton').files
+      let list = ''
+      for (let i = 0; i < fileList.length; i++) {
+        list += fileList[i].name + '<br>'
+      }
+      document.getElementById('FileName').innerHTML = list
+    },
+    // itemの登録===========================
     itemRegister () {
+      // storageに画像のアップロード（items.jsのactionを呼び出し（intem.jsに入れなくてもできる？））-----
+      this.$store.dispatch('items/uploadItemImage', {
+        fileName: this.fileName,
+        file: this.file
+      })
+        .then((url) => {
+        // 画像のフルバスが取得できる
+          this.imageUrl = url
+          // 画像を取得（場所がおそらく別の方が良い。また、全部取得するのではなく、登録したパーツだけ追加で表示できるようにしたい）
+          this.$store.dispatch('items/fetchItems')
+          // this.$store.dispatch('items/fetchItemsByUid')
+        })
+
+      // firestoreにfileNameとcategoryIdとauthorのアップロード ------------------------
       db.collection('item').add({
-        image: '',
-        category: this.categoryInputContent
+        fileName: this.fileName,
+        categoryId: this.addItemCategoryId,
+        author: this.$store.state.user.uid
       })
         .then(function (docRef) {
-          console.log('Document written with ID: ', docRef.id)
+          // console.log(downloadUrl)
         })
         .catch(function (error) {
           console.error('Error adding document: ', error)
         })
-      this.categoryInputContent = ''
+
+      this.addItemCategoryId = ''
     }
   }
 }
 </script>
+
 <style lang="scss" scoped>
+.navButtons{
+  a,
+  button {
+    color: $subColor;
+  }
+  .signInButton{
+    border-color: $subColor;
+    color: $subColor;
+    padding: 4px 12px;
+    border-radius: 3px;
+    text-decoration: none;
+    &:hover{
+      cursor: pointer;
+      background-color: $subColor;
+      color: #FFF;
+    }
+  }
+  .signOutButton{
+    border: none;
+    font-size: 80%;
+    cursor: pointer;
+  }
+}
+
 .buttons{
   display: flex;
   justify-content: center;
@@ -160,5 +249,50 @@ export default {
   align-items: center;
   flex-direction: column;
   margin-bottom: 10px;
+  border-radius: 5px;
+  label{
+    border: 1px solid $subColor;
+    background-color:#FFF;
+    border-radius: 3px;
+    color: $subColor;
+    padding: 5px 10px;
+    &:hover{
+      cursor: pointer;
+      background-color: $subColor;
+      color: #FFF;
+    }
+    input{
+      display: none;
+    }
+  }
+  .fileName{
+    font-size: 80%;
+    padding-top: 5px;
+  }
+}
+.categoryButtons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  li{
+    margin-right: 5px;
+  }
+  a{
+    display: inline-block;
+    border: 1px solid $keyColor;
+    font-size: 85%;
+    height: 2.4em;
+    line-height: 2.2em;
+    border-radius: 2.4em;
+    padding: 0 10px;
+    color: $keyColor;
+    text-decoration: none;
+    margin-bottom: 5px;
+    &:hover,
+    &.selected{
+      background-color: $keyColor;
+      color: #FFF;
+    }
+  }
 }
 </style>

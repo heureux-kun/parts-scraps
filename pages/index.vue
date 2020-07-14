@@ -1,61 +1,75 @@
+<!--
+index.vue
+-->
+
 <template>
   <div id="Content">
-    {{ items }}
-    <!-- <div v-for="item in items" :key="item.id">
-      {{ item.category }}
-    </div> -->
+    <transition>
+      <ul v-if="itemsShow" class="itemsWrapper">
+        <magic-grid>
+          <item
+            v-for="item in items"
+            :key="item.id"
+            :downloadUrl="item.downloadUrl"
+            :categoryId="item.categoryId"
+            :showAddButton="showAddButton"
+            :showEditButton="showEditButton"
+            v-on:add-click-event="addItem(item)"
+          />
+        </magic-grid>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <script>
 import firebase from '~/plugins/firebase'
-// import Item from '~/components/Item.vue'
+import Item from '~/components/Item.vue'
+
+const db = firebase.firestore()
 
 // 画像の取得テスト
-const storage = firebase.storage()
-const storageRef = storage.ref()
-const image = storageRef.child('images/images01.jpg')
-console.log('downRef：' + image)
+// const url = firebase.storage().ref().child('images/images01.jpg').getDownloadURL()
+// console.log('url：' + url)
 
 export default {
   components: {
-    // Item
+    Item
   },
   data () {
     return {
-      items: []
+      showAddButton: true,
+      showEditButton: false
     }
   },
-  // computed: {
-  //   // dispatchで「nuxtServerInit」のactionを呼び出す
-  //   getItmes () {
-  //     console.log('computed')
-  //     return this.$store.dispatch('nuxtServerInit')
-  //   }
-  // },
-  created () {
-    this.fetchItems()
-    console.log('created')
-  },
-  mounted () {
-    // getter経由でitemを取得する
-    this.items = this.$store.getters.items
-    console.log('mounted')
+  computed: {
+    items () {
+      return this.$store.getters['items/items']
+    },
+    itemsShow () {
+      return !!this.items || false
+    }
   },
   methods: {
-    fetchItems () {
-      this.$store.dispatch('nuxtServerInit')
+    // itemの登録===========================
+    addItem (item) {
+      db.collection('item').add({
+        fileName: item.fileName,
+        categoryId: item.categoryId,
+        author: this.$store.state.user.uid
+      })
+        .then(function (docRef) {
+          // console.log(downloadUrl)
+          alert('自分のscrapsに保存しました')
+        })
+        .catch(function (error) {
+          // console.error('Error adding document: ', error)
+        })
     }
-    // getData () {
-    //   const db = firebase.firestore()
-    //   const itemArray = []
-    //   db.collection('item').get().then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //       itemArray.push(doc.data())
-    //     })
-    //     this.item = itemArray
-    //   })
-    // }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

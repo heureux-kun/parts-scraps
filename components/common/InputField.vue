@@ -2,7 +2,7 @@
   <input
     :placeholder="[placeholderText]"
     :class="[width]"
-    v-bind:value="value"
+    :value="value"
     v-on:input="$emit('input', $event.target.value)"
     type="text"
     name="category"

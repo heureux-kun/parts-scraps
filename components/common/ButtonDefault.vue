@@ -24,19 +24,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  font-size: 80%;
-  border-color: #000;
-  color: #000;
-  padding: 8px 20px;
-  border-radius: 5px;
+  border-color: #333;
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 3px;
   text-decoration: none;
   &.small{
     font-size: 70%;
     padding: 6px 10px;
   }
-  &.primary{
+  &:hover{
+    cursor: pointer;
+    background-color: #333;
     color: #FFF;
-    background-color: red;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    opacity: 0.7;
+  }
+  &.action{
+    background-color: #1BD3A1;
+    border: 1px solid #1BD3A1;
+    color: #FFF;
   }
 }
 </style>

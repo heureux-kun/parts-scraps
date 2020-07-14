@@ -2,7 +2,8 @@
   <div @click="clickEvent" class="modalAddItem">
     <div @click="stopEvent" class="modalContent">
       <a @click="clickEvent" href="#" class="closeButton">
-        x
+        <font-awesome-icon :icon="['far', 'times-circle']" class="normal" />
+        <font-awesome-icon :icon="['fas', 'times-circle']" class="hover" />
       </a>
       <slot />
     </div>
@@ -44,15 +45,38 @@ export default {
   position: relative;
   z-index: 2;
   width: 50%;
-  padding: 20px;
+  padding: 30px 25px;
   background:#fff;
+  border-radius: 10px;
   p{
     margin-bottom: 10px;
   }
 }
 .closeButton{
   position: absolute;
-  right: 0;
-  top: 0;
+  font-size: 120%;
+  right: 10px;
+  top: 10px;
+  svg{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    color: $subColor;
+    font-size: 120%;
+  }
+  .normal{
+      display: block;
+    }
+    .hover{
+      display: none;
+    }
+  &:hover{
+    .normal{
+      display: none;
+    }
+    .hover{
+      display: block;
+    }
+  }
 }
 </style>

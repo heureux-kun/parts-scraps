@@ -1,22 +1,38 @@
 import firebase from '~/plugins/firebase'
 
 /* ======================
+ getters
+======================= */
+export const getters = {
+  user: (state) => {
+    return state.user
+  },
+  loggedIn: (state) => {
+    return state.loggedIn
+  },
+  categories: (state) => {
+    return state.categories
+  }
+}
+
+/* ======================
  state
 ======================= */
 export const state = () => ({
   user: null,
   loggedIn: false,
-  items: []
+  categories: [
+    { id: 1, name: 'header', slug: 'header', sort: 1 },
+    { id: 2, name: 'global navigation', slug: 'global-navigation', sort: 2 },
+    { id: 3, name: 'breadcrumb list', slug: 'breadcrumb-list', sort: 3 },
+    { id: 4, name: 'pagetop', slug: 'pagetop', sort: 4 },
+    { id: 5, name: 'title', slug: 'title', sort: 5 },
+    { id: 6, name: 'card', slug: 'card', sort: 6 },
+    { id: 7, name: 'form', slug: 'form', sort: 7 },
+    { id: 8, name: 'footer', slug: 'footer', sort: 8 },
+    { id: 9, name: 'others', slug: 'others', sort: 9 }
+  ]
 })
-
-/* ======================
- getters
-======================= */
-export const getters = {
-  items: (state) => {
-    return state.items
-  }
-}
 
 /* ======================
  mutations
@@ -28,9 +44,6 @@ export const mutations = {
   },
   setloggedIn(state, payload) {
     state.loggedIn = payload
-  },
-  setItems(state, payload) {
-    state.items = payload
   }
 }
 
@@ -56,65 +69,5 @@ export const actions = {
   signOut({ commit }) {
     commit('setUser', null)
     commit('setloggedIn', false)
-  },
-  nuxtServerInit({ commit }) {
-    const db = firebase.firestore()
-    const itemArray = []
-    db.collection('item')
-      .get()
-      // .then((snapshot) => {
-      //   snapshot.forEach(doc => commit('setItems', doc.data()))
-      // })
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // itemArray.push(doc.data())
-          itemArray.push({
-            id: doc.id,
-            ...doc.data()
-          })
-        })
-        console.log(itemArray)
-        commit('setItems', { itemArray })
-      })
   }
-
-  // nuxtServerInit({ commit }) {
-  //   const db = firebase.firestore()
-  //   const itemArray = []
-  //   db.collection('item')
-  //     .get()
-  //     // .then((snapshot) => {
-  //     //   snapshot.forEach(doc => commit('setItems', doc.data()))
-  //     // })
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         // itemArray.push(doc.data())
-  //         itemArray.push({
-  //           id: doc.id,
-  //           ...doc.data()
-  //         })
-  //       })
-  //       console.log(itemArray)
-  //       commit('setItems', { itemArray })
-  //     })
-  // }
-
-  // async nuxtServerInit({ commit }) {
-  //   const db = firebase.firestore()
-  //   const itemArray = []
-  //   const [querySnapshot] = await Promise.all([
-  //     db.collection('item')
-  //       .get()
-  //   ])
-
-  //   querySnapshot.forEach((doc) => {
-  //     // itemArray.push(doc.data())
-  //     itemArray.push({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     })
-  //   })
-  //   console.log(itemArray)
-  //   commit('setItems', { itemArray })
-  // }
 }

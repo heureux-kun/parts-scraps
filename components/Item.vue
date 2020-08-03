@@ -2,7 +2,6 @@
   <li>
     <a href="#">
       <img :src="downloadUrl">
-      <!-- {{ categoryId }} -->
     </a>
     <p class="operation">
       <button @click="addEvent" :class="{displayBlock:showAddButton}">
@@ -11,7 +10,13 @@
       <button @click="editEvent" :class="{displayBlock:showEditButton}">
         edit
       </button>
+      <button @click="deleteEvent" :class="{displayBlock:showDeleteButton}">
+        delete
+      </button>
     </p>
+    categoryId：{{ categoryId }}<br>
+    id：{{ id }}
+    <slot />
   </li>
 </template>
 
@@ -22,15 +27,23 @@ export default {
       type: String,
       default: ''
     },
-    // categoryId: {
-    //   type: Number,
-    //   default: 0
-    // },
+    categoryId: {
+      type: Number,
+      default: 0
+    },
+    id: {
+      type: String,
+      default: ''
+    },
     showAddButton: {
       type: Boolean,
       default: false
     },
     showEditButton: {
+      type: Boolean,
+      default: false
+    },
+    showDeleteButton: {
       type: Boolean,
       default: false
     }
@@ -40,7 +53,10 @@ export default {
       this.$emit('add-click-event')
     },
     editEvent () {
-      this.$emit('edit-click-event')
+      this.$emit('open-edit-modal')
+    },
+    deleteEvent () {
+      this.$emit('open-delete-modal')
     }
   }
 }

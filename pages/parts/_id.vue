@@ -14,7 +14,11 @@
             v-for="item in items"
             :key="item.id"
             :downloadUrl="item.downloadUrl"
+            :id="item.id"
             :categoryId="item.categoryId"
+            :showAddButton="addButtonShow"
+            :showEditButton="showEditButton"
+            v-on:add-click-event="addItem(item)"
           />
         </magic-grid>
       </ul>
@@ -23,7 +27,10 @@
 </template>
 
 <script>
+import firebase from '~/plugins/firebase'
 import Item from '~/components/Item.vue'
+
+const db = firebase.firestore()
 
 export default {
   components: {
@@ -50,6 +57,26 @@ export default {
     },
     itemsShow () {
       return !!this.items || false
+    },
+    addButtonShow () {
+      return !!this.$store.state.loggedIn
+    }
+  },
+  methods: {
+    // itemの登録===========================
+    addItem (item) {
+      db.collection('item').add({
+        fileName: item.fileName,
+        categoryId: item.categoryId,
+        author: this.$store.state.user.uid
+      })
+        .then(function (docRef) {
+          // console.log(downloadUrl)
+          alert('自分のscrapsに保存しました')
+        })
+        .catch(function (error) {
+          // console.error('Error adding document: ', error)
+        })
     }
   }
 }

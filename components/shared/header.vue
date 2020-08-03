@@ -13,10 +13,15 @@
           </button>
         </div>
         <div v-if="user" class="userBtn">
-          <a href="/user/parts/">
+          <nuxt-link :to="'/user/parts/'">
             {{ user.displayName }}
-          </a>
+          </nuxt-link>
           <ul>
+            <li>
+              <nuxt-link :to="'/user/parts/'">
+                my page
+              </nuxt-link>
+            </li>
             <li>
               <nuxt-link :to="'/user/setting/'">
                 setting
@@ -49,7 +54,7 @@
 
             <ul class="categoryButtons">
               <li v-for="category in categories" :key="category.id">
-                <a @click="setCategory(category.id);selectedButton=category.id" :class="[ selectedButton === category.id ? 'selected' : '' ]" href="#">
+                <a @click="setCategory(category.id);selectedCategoryId=category.id" :class="[ selectedCategoryId === category.id ? 'selected' : '' ]" href="#">
                   {{ category.name }}
                 </a>
               </li>
@@ -97,7 +102,7 @@ export default {
       file: '',
       fileName: '',
       imageUrl: '',
-      selectedButton: ''
+      selectedCategoryId: ''
     }
   },
   computed: {
@@ -232,14 +237,6 @@ export default {
   }
 }
 
-.buttons{
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  button{
-    margin: 0 10px;
-  }
-}
 .imageDragArea{
   text-align: center;
   background-color: #eeeeee;
@@ -268,31 +265,6 @@ export default {
   .fileName{
     font-size: 80%;
     padding-top: 5px;
-  }
-}
-.categoryButtons{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  li{
-    margin-right: 5px;
-  }
-  a{
-    display: inline-block;
-    border: 1px solid $keyColor;
-    font-size: 85%;
-    height: 2.4em;
-    line-height: 2.2em;
-    border-radius: 2.4em;
-    padding: 0 10px;
-    color: $keyColor;
-    text-decoration: none;
-    margin-bottom: 5px;
-    &:hover,
-    &.selected{
-      background-color: $keyColor;
-      color: #FFF;
-    }
   }
 }
 </style>

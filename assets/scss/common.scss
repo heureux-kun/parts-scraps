@@ -307,3 +307,37 @@ header{
 .v-leave-to {
   opacity: 0;
 }
+
+.categoryButtons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  li{
+    margin-right: 5px;
+  }
+  a{
+    display: inline-block;
+    border: 1px solid $keyColor;
+    font-size: 85%;
+    height: 2.4em;
+    line-height: 2.2em;
+    border-radius: 2.4em;
+    padding: 0 10px;
+    color: $keyColor;
+    text-decoration: none;
+    margin-bottom: 5px;
+    &:hover,
+    &.selected{
+      background-color: $keyColor;
+      color: #FFF;
+    }
+  }
+}
+.buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  button{
+    margin: 0 10px;
+  }
+}

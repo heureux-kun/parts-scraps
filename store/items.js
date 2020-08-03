@@ -81,9 +81,6 @@ export const actions = {
     const itemArray = []
     firestore.collection('item')
       .get()
-      // .then((snapshot) => {
-      //   snapshot.forEach(doc => commit('setItems', doc.data()))
-      // })
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           itemArray.push({
